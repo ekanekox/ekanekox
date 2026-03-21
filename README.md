@@ -19,7 +19,7 @@ Got acquired in 2023. It was the fifth attempt.
 
 ---
 
-> The numbers that don't matter but everyone posts anyway: 1,475 Duolingo days, 324 BJJ sessions (brown belt, one away from black), two dogs.
+> The numbers that don't matter but everyone posts anyway: 1,475 Duolingo days, 324 BJJ sessions (brown belt, one away from black), two dogs -- achilles and aurora <3.
 > The number that does: **zero paid CAC.**
 
 ---
