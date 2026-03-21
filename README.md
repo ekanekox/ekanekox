@@ -1,7 +1,7 @@
 # Eduardo Kaneko
 **Product Engineer · São Paulo**
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=14&pause=1000&color=F7F7F7&width=435&lines=Building+AI+tools+every+two+days.;Fifth+attempt+was+the+one+that+got+acquired.;Zero+paid+CAC.)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=14&pause=1000&color=2D2D2D&width=435&lines=Building+AI+tools+every+two+days.;Fifth+attempt+was+the+one+that+got+acquired.;Zero+paid+CAC.)](https://git.io/typing-svg)
 
 ---
 
