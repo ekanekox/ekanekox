@@ -212,7 +212,24 @@ button{font-family:inherit;color:inherit}
 .kr .det h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:500}
 .kr .det ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:13.5px;color:var(--ink2)}
 .kr .det p{font-size:13.5px;color:var(--ink2)}
-@media (max-width:760px){.kr > button{grid-template-columns:1fr}.kr .det{grid-template-columns:1fr}}
+.kr > button{grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr) auto}
+.att{display:grid;gap:5px;min-width:0;padding-top:14px}
+.att .trk{position:relative;height:14px;background:var(--wash);border-radius:3px}
+.att .fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:3px 4px 4px 3px;width:0;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.att .fill.short{background:var(--neutral-bar)}
+.att .tk{position:absolute;top:-4px;bottom:-4px;border-left:1.5px dashed var(--ink2);left:var(--pct)}
+.att .tk span{position:absolute;top:-15px;left:4px;font-family:var(--mono);font-size:10px;color:var(--ink2);white-space:nowrap}
+.att .tk.r span{left:auto;right:4px}
+.kr > button > *{min-width:0}
+.att .lbl{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.att .lbl b{color:var(--ink);font-weight:500}
+.mult{font-size:22px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.mult small{display:block;font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0;margin-top:3px;font-family:var(--mono)}
+.teamkr{display:grid;gap:12px}
+.teamkr .row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) auto;gap:14px;align-items:center;font-size:13.5px}
+.teamkr .row .t{color:var(--ink)}
+.teamkr .row .u{display:block;font-family:var(--mono);font-size:11px;color:var(--muted)}
+@media (max-width:760px){.kr > button{grid-template-columns:1fr}.kr .det{grid-template-columns:1fr}.teamkr .row{grid-template-columns:1fr}}
 .note{border-left:2px solid var(--accent);padding:4px 0 4px 14px;font-size:14px;color:var(--ink2);max-width:72ch}
 .note b{color:var(--ink);font-weight:500}
 
@@ -391,13 +408,13 @@ td.k{color:var(--ink);font-weight:500;white-space:nowrap}
         <div class="meta">
           <div><b>Eduardo Kaneko</b> · Growth Lead, LatAm · reports to Evan</div>
           <div>For Evan, Richard, Lucas, Malu, the Brazil RSDs and Steph</div>
-          <div>Numbers are meeting-reported as of Oct 5, 2026; each slide names its source</div>
+          <div>OKR results from the Q3 Growth tracker; other numbers are meeting-reported as of Oct 5, 2026. Each slide names its source</div>
         </div>
         <p class="hint">Use <kbd>←</kbd> <kbd>→</kbd> or the arrows below. <kbd>O</kbd> opens the slide list.</p>
       </div>
       <div class="dials">
-        <div class="dial"><div class="v">4 → 9<small>of 10 leads reached</small></div><div class="k">Brazil inbound contact rate after the September rebuild</div><div class="s">Growth weekly, Sep 22 · reported</div></div>
-        <div class="dial"><div class="v">12<small>S1 deals / week</small></div><div class="k">Highest weekly count since mid-August</div><div class="s">Evan 1:1, Sep 25</div></div>
+        <div class="dial"><div class="v">78<small>allbound deals · target 30</small></div><div class="k">Q3 KR1 · 2.6× the target</div><div class="s">Q3 OKR tracker · Growth · BR</div></div>
+        <div class="dial"><div class="v">180<small>closed-lost reopened with EB · target 5</small></div><div class="k">Q3 KR2 · Wake the Dead · 36× the target</div><div class="s">Q3 OKR tracker · Growth · BR</div></div>
         <div class="dial"><div class="v">150<small>in-person confirmations</small></div><div class="k">TMD26, São Paulo, Oct 15. From 60 registrations before the WhatsApp activation</div><div class="s">Week 40 planning page · Oct</div></div>
       </div>
     </div>
@@ -413,7 +430,7 @@ td.k{color:var(--ink);font-weight:500;white-space:nowrap}
     </div>
     <div class="body">
       <div class="agenda">
-        <button class="beat" data-go="3"><span class="n">01 / Q3 HIGHLIGHTS</span><h3>What shipped and what it moved</h3><p>Three proof stories, the Q3 OKR scorecard with the numbers that are and are not verified, and the gaps that kept recurring.</p><span class="s">Slides 3 – 6 · decision: what counts as evidence</span></button>
+        <button class="beat" data-go="3"><span class="n">01 / Q3 HIGHLIGHTS</span><h3>What shipped and what it moved</h3><p>Three proof stories, the Q3 OKR scorecard from the tracker (three of three, two several times over), and the gaps that kept recurring.</p><span class="s">Slides 3 – 6 · decision: what counts as evidence in Q4</span></button>
         <button class="beat" data-go="7"><span class="n">02 / Q4 ROADMAP</span><h3>The LatAm seat in Global Growth</h3><p>Where Q4 starts, the 80/20 global rule, four pillars, the 30-item cross-functional roadmap and the week-by-week sequence.</p><span class="s">Slides 7 – 11 · decision: three active programs</span></button>
         <button class="beat" data-go="12"><span class="n">03 / OKRS</span><h3>Q4 objectives and the asks</h3><p>Proposed Q4 OKRs aligned to deal size, efficiency and the regional route, then the seven decisions this plan depends on.</p><span class="s">Slides 12 – 14 · decision: lock targets</span></button>
       </div>
@@ -460,12 +477,12 @@ td.k{color:var(--ink);font-weight:500;white-space:nowrap}
           <div class="card story">
             <span class="tag">02 · Seller tools</span><h3>Sellers now pick from Spotter, with Wake the Dead inside it</h3>
             <dl class="kv"><div><dt>Moved</dt><dd>~50 logos claimed by ADRs in 15 minutes at launch (Aug 13). 72 logos worked in one week, ~250 in stage 1 (Sep 1). Spotter live with self-serve uploads; Mexico and EMEA lists in Sniper (Sep 22–25).</dd></div></dl>
-            <details><summary>Still missing</summary><p>A batch-level funnel from suggested logo to accepted, worked, S1, S2 and won. Selection is not conversion. Evan, Sep 1: "We still need to see the revenue impact."</p></details>
+            <details><summary>Still missing</summary><p>180 closed-lost deals reopened with an EB attached (Q3 tracker) is the KR. Reopened is not won: the batch-level funnel from suggested logo to S1, S2 and won revenue is the Q4 readout. Evan, Sep 1: "We still need to see the revenue impact."</p></details>
           </div>
           <div class="card story">
             <span class="tag">03 · TMD and expansion</span><h3>A working activation motion for the Oct 15 event</h3>
             <dl class="kv"><div><dt>Moved</dt><dd>Treble WhatsApp flow to 1,200 contacts took registrations from 60 to 100+ in a day (Sep 24). In-person confirmations: 116 (Sep 28), 150 (early Oct). A/B/C roundtable lists built with Gui.</dd></div></dl>
-            <details><summary>Still missing</summary><p>Downstream pipeline from attendees. UG2 closed its pilot at 0 of 10 expansion opportunities (see scorecard). Customer share of the list is reported as 7% in one note and 70% in another; reconcile before using either.</p></details>
+            <details><summary>Still missing</summary><p>Downstream pipeline from attendees. UG2 launched (KR3 met) and was paused Aug 26 after two champion complaints; the expansion opportunities it was built to open are not yet counted. Customer share of the TMD list is reported as 7% in one note and 70% in another; reconcile before using either.</p></details>
           </div>
         </div>
       </div>
@@ -478,14 +495,17 @@ td.k{color:var(--ink);font-weight:500;white-space:nowrap}
 <section class="slide" id="s5" data-title="Q3 OKR scorecard" data-beat="Q3 highlights">
   <div class="slide-in">
     <div class="slide-head">
-      <h2>Q3 OKRs: one met, one missed, one I never counted<small>Locked Jul 2 with Evan. Tap a key result for the evidence and what is still open.</small></h2>
+      <h2>Q3 OKRs: three of three, two of them several times over<small>From the Growth OKR tracker. Dashed tick is the target, blue is the actual, one scale per row. Tap a key result for the evidence and what it becomes in Q4.</small></h2>
       <div class="eyebrow"><b>01 / Q3 highlights</b> · scorecard</div>
     </div>
     <div class="body">
       <div class="score" id="score"></div>
-      <p class="note"><b>Team level.</b> Evan, Oct 1: the team's Q3 OKRs were met, with positive recognition. Mine are graded on the three above. The honest read: the operating model is real and adopted, but the revenue line is not yet in a report I own.</p>
+      <div class="split">
+        <div class="card"><h3>Team key results owned by Evan <span class="chip mono" style="margin-left:auto">context, not mine</span></h3><div class="teamkr" id="teamkr"></div></div>
+        <p class="note"><b>Owner rule.</b> The three above carry my name in the tracker's owner column. Evan's two are shown for team context only. Oct 1, Evan: the team met its Q3 OKRs. What Q4 adds is the revenue line behind the reopened deals and a countable expansion cohort.</p>
+      </div>
     </div>
-    <div class="foot">Sources: Current Weekly State (Sep 9) · Growth weekly <b>Sep 1</b> (BR red alert) · Evan 1:1 <b>Sep 1</b>, <b>Oct 1</b> · Cross-functional Roadmap R03, R05, R13.</div>
+    <div class="foot">Sources: <b>Q3 OKR tracker</b> (Growth sheet: target, owner, actual) · Growth weekly <b>Sep 1</b> · Evan 1:1 <b>Sep 1</b>, <b>Oct 1</b> · Cross-functional Roadmap R05, R13.</div>
   </div>
 </section>
 
@@ -821,23 +841,33 @@ animateBA();
 
 /* ---------- slide 5: Q3 scorecard ---------- */
 const Q3=[
- {kr:"KR1 · Acquisition",tg:"30+ net-new outbound logos, primarily mid-market",cls:"crit",st:"Below forecast",num:"−9",l:"vs. the BR new-logo goal (forecast, Sep 1)",
-  ev:["Brazil was forecast to miss the Q3 new-logo goal by ~9 logos; Q1 and Q2 goals were hit (Growth weekly, Sep 1).","I own the enablement layer (Sherlock, Spotter, inbound pipeline, priority lists). Net-new logos and BR ARR are the commission-linked metrics (Evan, Aug 26).","The final Q3 count was never pulled by me. Confirm in HubSpot before the QBR."],
-  gap:"The number lives in Sales reports, not in one I own. Q4 fix: the sourced-pipeline report (R03, R05) so Growth's share of logos is visible every week."},
- {kr:"KR2 · Closed-loss · Wake the Dead",tg:"5 reopened closed-lost deals with an economic buyer attached (GWTH-956)",cls:"good",st:"Met",num:"≥5",l:"reopened with EB · verified Sep 9",
-  ev:["~50 logos claimed by ADRs in the first 15 minutes (Aug 13); 72 worked in one week and ~250 in stage 1 by Sep 1.","Batch 4 launched Sep 8; the write-up was posted to GTM engineering.","Wake the Dead now ships inside Spotter and went to Mexico with a priority list (Sep 22)."],
-  gap:"Not yet written as a HubSpot report link in the 1:1 doc, and no closed-won revenue attributed. Evan, Sep 1: \"We still need to see the revenue impact.\" Q4 O1 carries it."},
- {kr:"KR3 · Expansion · UG2",tg:"10 expansion opportunities opened (Expansion deal type, EB attached, Sales-accepted) (GWTH-957)",cls:"crit",st:"Missed",num:"0 / 10",l:"opportunities opened",
-  ev:["UG2 paused Aug 26: 163 users reached, 24.8% open rate, two champion complaints.","Post-mortem discussed; account-by-account closure with the nine TAMs is still open (R13).","Expansion needs plant-level ownership in HubSpot and TAM consent before Growth can run outreach (R07, R11)."],
-  gap:"The pivot is TAM-led: Sales Page Builder in Brazil, out-of-plant cohort, TMD expansion follow-up. It becomes Q4 O4 with a countable cohort instead of an email blast."}
+ {kr:"KR1 · Acquisition · BR",tg:"Generate allbound deals",target:30,actual:78,unit:" deals",mult:"2.6×",ml:"260% of target",
+  ev:["78 allbound deals generated in Q3 against a target of 30 (Growth OKR tracker, owner: Eduardo).","Enablement behind it: Sherlock / SpinGen rollout, the BR upper mid-market hit list with Buzz (75 accounts, 37 on list, EB named on 99%), the Sep 1 inbound pipeline and Spotter from mid-August.","Context, not contradiction: Sales' own BR new-logo goal was forecast to miss by ~9 (Sep 1). Deals generated and logos closed are different counters."],
+  next:"Q4 turns the quarterly total into a weekly line: Growth-sourced stage-1 deals per program (Wake the Dead, Spotter, priority lists) for Brazil and Mexico, in one report Evan can forward to Richard, Igor and Pepeu."},
+ {kr:"KR2 · Acquisition · BR · Wake the Dead",tg:"Reopen closed-lost deals with an economic buyer attached",target:5,actual:180,unit:" deals",mult:"36×",ml:"3,600% of target",
+  ev:["180 closed-lost deals reopened with an EB attached against a target of 5 (Growth OKR tracker).","~50 logos claimed by ADRs in the first 15 minutes at launch (Aug 13); 72 worked in one week and ~250 in stage 1 by Sep 1; batch 4 launched Sep 8.","Wake the Dead now ships inside Spotter and went to Mexico with a priority list (Sep 22). Write-up posted to GTM engineering."],
+  next:"Reopened is not won. Q4 O1 carries the next step: closed-won ARR from Wake the Dead in a HubSpot report linked in the 1:1 doc by Dec 31, with reopened deals and new opportunities reported separately."},
+ {kr:"KR3 · Expansion · BR · UG2",tg:"(+1) Launch the up-sell UG2 campaign",target:1,actual:1,unit:"",mult:"Met",ml:"launched · 1 of 1",
+  ev:["UG2 up-sell campaign launched (1 of 1, Growth OKR tracker).","Reached 163 users with a 24.8% open rate; paused Aug 26 after two champion complaints.","Post-mortem discussed; account-by-account closure with the nine TAMs is still open (R13)."],
+  next:"Expansion goes TAM-led in Q4: Sales Page Builder with two Brazil sellers, an out-of-plant cohort with a named owner each, and TMD follow-up. Q4 O4 counts the expansion opportunities this motion was built to open."}
 ];
+function attBar(target,actual,unit,short){
+  const max=Math.max(target,actual)*1.06;
+  const pa=(actual/max*100).toFixed(1),pt=(target/max*100).toFixed(1);
+  return `<div class="att"><div class="trk"><div class="fill${short?" short":""}" style="width:${pa}%"></div><div class="tk${pt>60?" r":""}" style="--pct:${pt}%"><span>target ${esc(String(target))}${esc(unit)}</span></div></div><div class="lbl"><span>0</span><span>actual <b>${esc(String(actual))}${esc(unit)}</b></span></div></div>`;
+}
 $("#score").innerHTML=Q3.map((k,i)=>`<div class="kr" id="kr${i}">
  <button type="button" aria-expanded="false"><div><div class="t">${esc(k.kr)}</div><div class="tg">${esc(k.tg)}</div></div>
- <div class="nm"><span class="num">${esc(k.num)}</span><span class="l">${esc(k.l)}</span></div>
- <span class="chip ${k.cls}"><span class="dot"></span>${esc(k.st)}</span></button>
- <div class="det"><div><h4>Evidence</h4><ul>${k.ev.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div><div><h4>What is still open</h4><p>${esc(k.gap)}</p></div></div></div>`).join("");
+ ${attBar(k.target,k.actual,k.unit,false)}
+ <div style="display:flex;align-items:center;gap:14px"><div class="mult">${esc(k.mult)}<small>${esc(k.ml)}</small></div><span class="chip good"><span class="dot"></span>Met</span></div></button>
+ <div class="det"><div><h4>Evidence</h4><ul>${k.ev.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div><div><h4>What it becomes in Q4</h4><p>${esc(k.next)}</p></div></div></div>`).join("");
 $$("#score .kr > button").forEach(b=>b.addEventListener("click",()=>{const k=b.parentElement;const o=!k.classList.contains("open");k.classList.toggle("open",o);b.setAttribute("aria-expanded",o);}));
 $("#kr1").classList.add("open");$("#kr1 > button").setAttribute("aria-expanded","true");
+const TEAM=[
+ {t:"Lift stage 3→5 progression in campaign vs. the control",u:"Efficiency · US · Evan Rosenstein",target:10,actual:7,unit:"%",short:true,st:"70% of target",cls:"warn"},
+ {t:"Framework for globalization",u:"Efficiency · global · Evan Rosenstein",target:1,actual:1,unit:"",short:false,st:"Met · 1 of 1",cls:"good"}
+];
+$("#teamkr").innerHTML=TEAM.map(r=>`<div class="row"><div><span class="t">${esc(r.t)}</span><span class="u">${esc(r.u)}</span></div>${attBar(r.target,r.actual,r.unit,r.short)}<span class="chip ${r.cls}"><span class="dot"></span>${esc(r.st)}</span></div>`).join("");
 
 /* ---------- slide 7: rate slider ---------- */
 const rate=$("#rate");
@@ -862,7 +892,7 @@ const PILLARS=[
   items:[["R05","Spotter results dashboard: stage-1 deals sourced per ADR, per week"],["R02","Lead scoring v4 on the lead object with intent signals as a weight; a publish decision and a rollback plan"],["R08","Sniper usage tracking with Malu; backlog ordered by observed activation and execution drop-offs"],["R06","Sniper ↔ HubSpot swim lanes: source and prioritize in Sniper, call, email and follow up in HubSpot; one review-and-approve handoff, no CSV round trips"],["R07","Plant-level recommendations once the plant object is authoritative"]],
   done:"Every BR and MX ADR zeroes out Spotter weekly, and the dashboard shows what it sourced."},
  {k:"Acquisition",key:"B",one:"New logos in Brazil, Mexico and LatAm. Acquisition is the strategy; paid is one tactic inside it.",
-  why:"Brazil was forecast to miss the Q3 new-logo goal by ~9. Hypothesis from Oct 1: high-quality new logos may be saturating, but each new logo opens several plants, so acquisition splits into new logos and expansion sales. Top-of-funnel materials (e-books, content ads) feed both.",
+  why:"Growth\u2019s Q3 allbound KR landed at 78 against 30, while Sales\u2019 BR new-logo goal was forecast to miss by ~9 (Sep 1): generated deals are outrunning closed logos. Hypothesis from Oct 1: high-quality new logos may be saturating, but each new logo opens several plants, so acquisition splits into new logos and expansion sales. Top-of-funnel materials (e-books, content ads) feed both.",
   items:[["R05","Wake the Dead: from reopened deals to closed-won ARR in a HubSpot report"],["R09","Mexico rollout: Spotter, Wake the Dead and weekly lists with Pepeu's ADRs; Pepeu reports the results"],["R16","Brazil ABM priorities refreshed against live open deals, EB coverage and TMD participation"],["R18","US inbound replication with Steph: BR/MX runbook, US differences mapped, one joint owner per deliverable"],["R17","EMEA / Poland: ~1,000 food companies down to ~100 priority accounts, a one-week playbook and a justified pilot budget"]],
   done:"Growth-sourced stage-1 deals counted weekly for Brazil and Mexico, in one link Evan can forward to Richard, Igor and Pepeu."},
  {k:"Paid",key:"C",one:"Keep and improve efficiency. Align paid with the score system and the inbound pipeline.",
@@ -967,8 +997,8 @@ setWin(1);
 const OKRS=[
  {o:"O1 · Acquisition",t:"Bring Brazil back to 80 stage-1 deals a month, and count what Growth sourced.",krs:[
   {t:"≥20 stage-1 deals a week in Brazil, sustained for 4 consecutive weeks by Nov 30",base:14,tgt:20,max:24,unit:"/wk",n:"Baseline ~14/week (Oct 1). 12 was the best week since mid-August."},
-  {t:"Growth-sourced stage-1 deals (Wake the Dead, Spotter, priority lists) counted weekly for BR and MX in one report linked in the 1:1 doc",bin:true,n:"Baseline: not counted anywhere Evan reads."},
-  {t:"Wake the Dead closed-won ARR in a HubSpot report by Dec 31",bin:true,n:"Baseline: ≥5 reopened with EB; no won revenue attributed yet."}
+  {t:"Growth-sourced stage-1 deals (Wake the Dead, Spotter, priority lists) counted weekly for BR and MX in one report linked in the 1:1 doc",bin:true,n:"Baseline: 78 allbound deals in Q3 as a quarterly total; not yet a weekly line by program."},
+  {t:"Wake the Dead closed-won ARR in a HubSpot report by Dec 31",bin:true,n:"Baseline: 180 reopened with EB in Q3 (36× the KR); no won revenue attributed yet."}
  ]},
  {o:"O2 · Efficiency",t:"Make inbound and paid efficient before adding spend.",krs:[
   {t:"First-attempt coverage ≥90% of eligible hand-raisers, with the definition and denominator agreed with Pre-sales",base:40,tgt:90,max:100,unit:"%",n:"Baseline ~4/10 in August, ~9/10 reported Sep 22 under an undefined denominator. Target becomes real once the definition is agreed."},
@@ -983,7 +1013,7 @@ const OKRS=[
  ]},
  {o:"O4 · Expansion",t:"Turn every logo into a plant strategy, with a cohort someone owns.",krs:[
   {t:"Sales Page Builder: 2 Brazil sellers with tracked sends and prospect actions by Oct 31",base:0,tgt:2,max:4,unit:" sellers",n:"Baseline: 0 in Brazil; one US anecdote (Gage, on-site booked next day)."},
-  {t:"≥10 expansion opportunities opened from the out-of-plant and TMD cohorts by Dec 18, with a named owner on each",base:0,tgt:10,max:12,unit:"",n:"Replaces UG2's 10 (0 reached). Target to calibrate once the cohort is sized."},
+  {t:"≥10 expansion opportunities opened from the out-of-plant and TMD cohorts by Dec 18, with a named owner on each",base:0,tgt:10,max:12,unit:"",n:"UG2 launched in Q3 (KR met). This KR counts the opportunities that motion was built to open; calibrate once the cohort is sized."},
   {t:"TMD follow-up runbook executed; stage-1 and expansion opportunities from attendees counted within 30 days",bin:true,n:"Baseline: 150 in-person confirmations; runbook unconfirmed (R15)."}
  ]}
 ];
