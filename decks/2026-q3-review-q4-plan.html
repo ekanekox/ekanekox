@@ -1,0 +1,1013 @@
+<title>Q3 Review & Q4 Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a 16:9-leaning slide deck, one slide per screen, left-aligned content with a fixed bottom rail.
+   Palette: cool steel ground, cobalt accent (the one bold color), validated chart series and reserved status colors. */
+:root{
+  color-scheme:light;
+  --bg:#f2f4f8; --surface:#ffffff; --surface2:#e9edf3;
+  --ink:#0e1726; --ink2:#48546a; --muted:#7a8497;
+  --hair:#d9dfe9; --axis:#b8c2d1; --wash:rgba(14,23,38,.05); --wash2:rgba(14,23,38,.09);
+  --accent:#1a56db; --accent-ink:#ffffff; --accent-soft:rgba(26,86,219,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --neutral-bar:#b8c2d1;
+  --good:#006300; --good-fill:#0ca30c; --warn:#8a5a00; --warn-fill:#fab219; --crit:#b32d2d; --crit-fill:#d03b3b;
+  --tip-bg:#0e1726; --tip-ink:#ffffff;
+  --shadow:0 1px 2px rgba(14,23,38,.05),0 12px 32px -16px rgba(14,23,38,.18);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0b0f16; --surface:#121826; --surface2:#1a2233;
+    --ink:#eef2f7; --ink2:#b6bfcc; --muted:#8a94a6;
+    --hair:#243049; --axis:#3a4760; --wash:rgba(255,255,255,.05); --wash2:rgba(255,255,255,.09);
+    --accent:#5b8def; --accent-ink:#0b0f16; --accent-soft:rgba(91,141,239,.16);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --neutral-bar:#3a4760;
+    --good:#4ad24a; --good-fill:#0ca30c; --warn:#fab219; --warn-fill:#fab219; --crit:#ff7b7b; --crit-fill:#e66767;
+    --tip-bg:#eef2f7; --tip-ink:#0b0f16;
+    --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 32px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0b0f16; --surface:#121826; --surface2:#1a2233;
+  --ink:#eef2f7; --ink2:#b6bfcc; --muted:#8a94a6;
+  --hair:#243049; --axis:#3a4760; --wash:rgba(255,255,255,.05); --wash2:rgba(255,255,255,.09);
+  --accent:#5b8def; --accent-ink:#0b0f16; --accent-soft:rgba(91,141,239,.16);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --neutral-bar:#3a4760;
+  --good:#4ad24a; --good-fill:#0ca30c; --warn:#fab219; --warn-fill:#fab219; --crit:#ff7b7b; --crit-fill:#e66767;
+  --tip-bg:#eef2f7; --tip-ink:#0b0f16;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 12px 32px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow:hidden}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0}
+a{color:var(--accent)}
+button{font-family:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--ink2);font-weight:500}
+
+/* progress + deck */
+.progress{position:fixed;left:0;top:env(safe-area-inset-top,0px);height:3px;width:100%;background:var(--hair);z-index:20}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s ease}
+.deck{height:100%;padding-bottom:calc(64px + env(safe-area-inset-bottom,0px));padding-top:3px}
+.slide{height:100%;overflow-y:auto;overflow-x:hidden;padding:clamp(20px,4vh,44px) clamp(16px,5vw,64px) 28px;display:none}
+.slide.on{display:block}
+.slide-in{max-width:1180px;margin:0 auto;min-height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:18px}
+.slide-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.slide-head .eyebrow{display:flex;gap:10px;flex-wrap:wrap}
+.slide h2{font-size:clamp(22px,2.6vw,34px);line-height:1.2;letter-spacing:-.02em;max-width:26ch}
+.slide h2 small{display:block;font-size:15px;font-weight:400;color:var(--ink2);letter-spacing:0;margin-top:8px;max-width:64ch;text-wrap:pretty}
+.body{min-width:0;display:grid;gap:16px;align-content:start}
+.foot{font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--hair);padding-top:10px;line-height:1.6}
+.foot b{color:var(--ink2);font-weight:500}
+@media (prefers-reduced-motion:no-preference){
+  .slide.on .slide-in{animation:rise .32s ease-out both}
+  @keyframes rise{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+
+/* rail */
+.rail{position:fixed;left:0;right:0;bottom:0;height:calc(64px + env(safe-area-inset-bottom,0px));padding:0 clamp(12px,3vw,32px) env(safe-area-inset-bottom,0px);background:var(--surface);border-top:1px solid var(--hair);display:flex;align-items:center;gap:10px;z-index:20}
+.rail .brand{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rail .brand b{color:var(--ink2);font-weight:500}
+.nbtn{appearance:none;border:1px solid var(--hair);background:var(--surface);border-radius:6px;height:36px;min-width:36px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--ink)}
+.nbtn:hover{background:var(--surface2);border-color:var(--axis)}
+.nbtn:disabled{opacity:.4;cursor:default}
+.nbtn svg{width:14px;height:14px}
+.counter{font-family:var(--mono);font-size:12.5px;color:var(--ink2);min-width:7ch;text-align:center;font-variant-numeric:tabular-nums}
+.counter b{color:var(--ink);font-weight:500}
+@media (max-width:560px){.rail .brand{display:none}}
+
+/* overview */
+.ov-back{position:fixed;inset:0;background:rgba(14,23,38,.35);z-index:30;opacity:0;pointer-events:none;transition:opacity .2s}
+.ov-back.on{opacity:1;pointer-events:auto}
+.ov{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.98);width:min(560px,calc(100% - 32px));max-height:min(80vh,720px);background:var(--surface);border:1px solid var(--hair);border-radius:10px;box-shadow:var(--shadow);z-index:31;visibility:hidden;opacity:0;transition:opacity .2s,transform .2s,visibility 0s .2s;display:grid;grid-template-rows:auto 1fr}
+.ov.on{visibility:visible;opacity:1;transform:translate(-50%,-50%);transition:opacity .2s,transform .2s,visibility 0s}
+.ov .h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--hair)}
+.ov .h h3{font-size:14px;flex:1}
+.ov ol{list-style:none;margin:0;padding:8px;overflow:auto}
+.ov li button{appearance:none;border:0;background:none;width:100%;text-align:left;padding:9px 10px;border-radius:6px;display:grid;grid-template-columns:3ch 1fr auto;gap:12px;align-items:baseline;cursor:pointer}
+.ov li button:hover{background:var(--wash)}
+.ov li button.now{background:var(--accent-soft)}
+.ov li .n{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.ov li .t{font-size:14px;font-weight:500}
+.ov li .s{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* cover */
+.cover{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:32px 56px;align-items:center;min-height:100%}
+.cover h1{font-size:clamp(38px,6.4vw,84px);line-height:.98;letter-spacing:-.035em;font-weight:700}
+.cover h1 em{font-style:normal;color:var(--accent)}
+.cover .lead{font-size:clamp(16px,1.6vw,20px);color:var(--ink2);max-width:40ch;margin-top:18px;text-wrap:pretty}
+.cover .meta{display:grid;gap:4px;margin-top:28px;font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.6}
+.cover .meta b{color:var(--ink2);font-weight:500}
+.dials{display:grid;gap:10px}
+.dial{background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:14px 16px;display:grid;gap:2px}
+.dial .v{font-size:30px;line-height:1.05;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.dial .v small{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0;margin-left:6px}
+.dial .k{font-size:13px;color:var(--ink2)}
+.dial .s{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.cover .hint{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:12px}
+.cover .hint kbd{font-family:inherit;border:1px solid var(--hair);border-radius:4px;padding:0 5px;background:var(--surface)}
+@media (max-width:860px){.cover{grid-template-columns:1fr;align-items:start}}
+
+/* generic blocks */
+.card{background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:16px 18px;min-width:0}
+.card h3{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:1fr}}
+@media (max-width:640px){.grid2,.grid4{grid-template-columns:1fr}}
+.list{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--ink2);font-size:14px}
+.list li::marker{color:var(--muted)}
+.list b{color:var(--ink);font-weight:500}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);border-radius:999px;padding:2px 9px;font-size:12px;color:var(--ink2);background:var(--surface);white-space:nowrap}
+.chip.mono{font-family:var(--mono);font-size:11px}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex:none}
+.chip.good{color:var(--good)} .chip.good .dot{background:var(--good-fill)}
+.chip.warn{color:var(--warn)} .chip.warn .dot{background:var(--warn-fill)}
+.chip.crit{color:var(--crit)} .chip.crit .dot{background:var(--crit-fill)}
+.chip.acc{color:var(--accent)} .chip.acc .dot{background:var(--accent)}
+.num{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.num small{font-size:12px;color:var(--muted);font-weight:400;letter-spacing:0}
+
+/* agenda */
+.agenda{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.agenda{grid-template-columns:1fr}}
+.beat{background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:18px 20px;display:grid;gap:10px;align-content:start;text-align:left;cursor:pointer;transition:border-color .15s,background .15s}
+.beat:hover{border-color:var(--axis);background:var(--surface2)}
+.beat .n{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.08em}
+.beat h3{font-size:18px;letter-spacing:-.015em}
+.beat p{color:var(--ink2);font-size:14px}
+.beat .s{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* arc / timeline */
+.arc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;position:relative}
+.arc::before{content:"";position:absolute;left:7px;right:7px;top:7px;height:1px;background:var(--axis)}
+.arc button{appearance:none;background:none;border:0;text-align:left;position:relative;padding:22px 20px 8px 0;cursor:pointer;border-radius:6px;display:grid;gap:4px;align-content:start}
+.arc button::after{content:"";position:absolute;left:0;top:1px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:1.5px solid var(--axis);transition:transform .15s,border-color .15s,background .15s}
+.arc button.on::after,.arc button:hover::after{border-color:var(--accent);transform:scale(1.15)}
+.arc button.on::after{background:var(--accent)}
+.arc .when{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.arc .what{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.arc .sub{color:var(--ink2);font-size:13.5px;max-width:36ch}
+.arcdet{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px}
+@media (max-width:860px){.arc{grid-template-columns:1fr}.arc::before{display:none}.arc button{padding:0 0 14px 24px}.arc button::before{content:"";position:absolute;left:6px;top:14px;bottom:0;width:1px;background:var(--axis)}.arc button:last-child::before{display:none}.arc button::after{top:3px}.arcdet{grid-template-columns:1fr}}
+
+/* before/after small multiples */
+.ba{display:grid;gap:12px}
+.ba-row{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--hair)}
+.ba-row:last-child{border-bottom:0}
+.ba-row .k{font-size:14px;font-weight:500}
+.ba-row .u{font-size:12px;color:var(--muted);display:block;font-weight:400}
+.ba-bars{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;align-items:start}
+.ba-labs{display:grid;gap:5px}
+.ba-labs span{height:16px;display:flex;align-items:center;font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ba-trks{padding-right:60px;min-width:0}
+.ba-trks > div{position:relative;display:grid;gap:5px}
+.ba-bar .trk{height:16px;position:relative;background:var(--wash);border-radius:3px}
+.ba-bar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px 4px 4px 3px;background:var(--neutral-bar);width:0;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.ba-bar.after .fill{background:var(--accent)}
+.ba-bar.after.down .fill{background:var(--s2)}
+.ba-bar .val{position:absolute;top:50%;transform:translateY(-50%);left:calc(var(--pct) + 8px);font-family:var(--mono);font-size:11.5px;color:var(--ink);white-space:nowrap}
+.ba-tgt{position:absolute;top:-4px;bottom:-4px;width:0;border-left:1.5px dashed var(--ink2);left:var(--pct);z-index:1}
+.ba-tgt span{position:absolute;top:-16px;left:4px;font-family:var(--mono);font-size:10px;color:var(--ink2);white-space:nowrap}
+.ba-src{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:4px}
+@media (max-width:560px){.ba-row{grid-template-columns:1fr;gap:8px}}
+
+/* proof stories */
+.story{display:grid;gap:10px;align-content:start}
+.story .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.story h3{font-size:16px;margin:0}
+.story .kv{display:grid;gap:8px;font-size:13.5px;color:var(--ink2)}
+.story .kv div{display:grid;grid-template-columns:62px 1fr;gap:8px}
+.story .kv dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.story .kv dd{margin:0}
+.story details{border-top:1px solid var(--hair);padding-top:8px}
+.story summary{cursor:pointer;font-size:13px;color:var(--ink2);font-weight:500;list-style:none;display:flex;align-items:center;gap:6px}
+.story summary::-webkit-details-marker{display:none}
+.story summary::before{content:"+";font-family:var(--mono);color:var(--muted);width:12px}
+.story details[open] summary::before{content:"−"}
+.story details p{font-size:13px;color:var(--ink2);margin-top:6px}
+
+/* scorecard */
+.score{display:grid;gap:10px}
+.kr{background:var(--surface);border:1px solid var(--hair);border-radius:8px;overflow:hidden}
+.kr > button{appearance:none;border:0;background:none;width:100%;text-align:left;padding:14px 18px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) auto;gap:14px;align-items:center;cursor:pointer}
+.kr > button:hover{background:var(--wash)}
+.kr .t{font-size:15px;font-weight:600}
+.kr .tg{font-size:13px;color:var(--ink2);margin-top:2px}
+.kr .nm{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.kr .nm .num{font-size:24px}
+.kr .nm .l{font-size:12px;color:var(--muted)}
+.kr .det{display:none;border-top:1px solid var(--hair);padding:14px 18px;gap:14px;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+.kr.open .det{display:grid}
+.kr .det h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:500}
+.kr .det ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:13.5px;color:var(--ink2)}
+.kr .det p{font-size:13.5px;color:var(--ink2)}
+@media (max-width:760px){.kr > button{grid-template-columns:1fr}.kr .det{grid-template-columns:1fr}}
+.note{border-left:2px solid var(--accent);padding:4px 0 4px 14px;font-size:14px;color:var(--ink2);max-width:72ch}
+.note b{color:var(--ink);font-weight:500}
+
+/* gaps */
+.gaps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:1100px){.gaps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:720px){.gaps{grid-template-columns:1fr}}
+.gap{background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:14px 16px;display:grid;gap:8px;align-content:start}
+.gap .g{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.gap p{font-size:13px;color:var(--ink2)}
+.gap .fix{font-size:13px;border-top:1px solid var(--hair);padding-top:8px}
+.gap .fix b{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px;font-weight:500}
+
+/* slider */
+.sim{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.sim{grid-template-columns:1fr}}
+.range{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:6px 0 0;--pct:0%}
+.range::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--pct),var(--hair) var(--pct))}
+.range::-moz-range-track{height:4px;border-radius:2px;background:var(--hair)}
+.range::-moz-range-progress{height:4px;border-radius:2px;background:var(--accent)}
+.range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);margin-top:-8px;box-shadow:var(--shadow);cursor:grab}
+.range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);box-shadow:var(--shadow);cursor:grab}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:2px}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+@media (max-width:560px){.readout{grid-template-columns:1fr}}
+.ro{display:grid;gap:2px}
+.ro .k{font-size:12.5px;color:var(--ink2)}
+.ro .v{font-size:26px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ro .v.good{color:var(--good)} .ro .v.crit{color:var(--crit)}
+.meter{position:relative;height:18px;background:var(--wash);border-radius:4px;margin-top:16px}
+.meter .fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:4px;transition:width .4s cubic-bezier(.2,.8,.2,1)}
+.meter .tgt{position:absolute;top:-6px;bottom:-6px;left:80%;border-left:1.5px dashed var(--ink2)}
+.meter .tgt span{position:absolute;top:-18px;left:4px;font-family:var(--mono);font-size:10.5px;color:var(--ink2);white-space:nowrap}
+.meter .ax{position:absolute;top:22px;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.facts{display:grid;gap:10px}
+.fact{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;font-size:13.5px;color:var(--ink2)}
+.fact .n{font-family:var(--mono);font-size:15px;color:var(--ink);font-weight:500;min-width:8ch;font-variant-numeric:tabular-nums}
+
+/* team / regions */
+.team{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.team{grid-template-columns:1fr}}
+.seat{background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.seat.me{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.seat .r{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.seat .w{font-size:15px;font-weight:600}
+.seat p{font-size:13px;color:var(--ink2)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--hair)}
+thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--surface2)}
+td{color:var(--ink2)}
+td.k{color:var(--ink);font-weight:500;white-space:nowrap}
+.tbl{overflow-x:auto;border:1px solid var(--hair);border-radius:8px;background:var(--surface)}
+.split{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.eighty{display:grid;grid-template-columns:4fr 1fr;height:28px;border-radius:5px;overflow:hidden;gap:2px;margin:6px 0 4px}
+.eighty span{display:flex;align-items:center;padding:0 10px;font-family:var(--mono);font-size:11.5px;color:var(--accent-ink);background:var(--accent)}
+.eighty span:last-child{background:var(--neutral-bar);color:var(--ink);justify-content:center;padding:0}
+
+/* pillars */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--hair);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{appearance:none;border:0;background:none;color:var(--ink2);font-size:14.5px;font-weight:500;padding:8px 12px 12px;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap;display:inline-flex;gap:8px;align-items:center;border-radius:6px 6px 0 0}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .k{font-family:var(--mono);font-size:10.5px;color:var(--muted);border:1px solid var(--hair);border-radius:4px;padding:1px 5px}
+.tab[aria-selected="true"] .k{color:var(--accent);border-color:var(--accent)}
+.pillar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:16px}
+@media (max-width:860px){.pillar{grid-template-columns:1fr}}
+.pillar .one{font-size:clamp(17px,1.8vw,22px);line-height:1.3;letter-spacing:-.015em;font-weight:600;max-width:30ch}
+.pillar .why{color:var(--ink2);font-size:14px;margin-top:10px;max-width:52ch}
+.pillar .done{margin-top:14px;border-top:1px solid var(--hair);padding-top:10px;font-size:13.5px}
+.pillar .done b{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--good);display:block;font-weight:500;margin-bottom:2px}
+.pillar ol{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.pillar ol li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:9px 12px;border:1px solid var(--hair);border-radius:6px;background:var(--surface);font-size:13.5px}
+.pillar ol li .id{font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:3px;min-width:3ch}
+
+/* roadmap board */
+.filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fchip{appearance:none;border:1px solid var(--hair);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:12.5px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;color:var(--ink2)}
+.fchip:hover{border-color:var(--axis)}
+.fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fchip .c{font-family:var(--mono);font-size:10.5px;opacity:.75}
+.board{display:grid;gap:6px}
+.item{background:var(--surface);border:1px solid var(--hair);border-radius:6px;overflow:hidden}
+.item > button{appearance:none;border:0;background:none;width:100%;text-align:left;padding:10px 14px;display:grid;grid-template-columns:4ch minmax(0,2fr) minmax(0,1.1fr) 9ch auto;gap:12px;align-items:center;cursor:pointer;font-size:13.5px}
+.item > button:hover{background:var(--wash)}
+.item .id{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.item .ti{font-weight:500;min-width:0}
+.item .ow{color:var(--ink2);font-size:12.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .cp{font-family:var(--mono);font-size:11.5px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.item .fo{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;color:var(--ink2)}
+.item .fo i{width:7px;height:7px;border-radius:50%;background:var(--muted);display:inline-block}
+.item .fo.Now{color:var(--accent)} .item .fo.Now i{background:var(--accent)}
+.item .fo.Dependency{color:var(--warn)} .item .fo.Dependency i{background:var(--warn-fill)}
+.item .fo.Next i{background:var(--ink2)}
+.item .det{display:none;border-top:1px solid var(--hair);padding:12px 14px 14px;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;font-size:13px;color:var(--ink2)}
+.item.open .det{display:grid}
+.item .det h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:3px}
+.item .det .ws{font-family:var(--mono);font-size:11px;color:var(--ink);border:1px solid var(--hair);border-radius:4px;padding:1px 6px;display:inline-block}
+@media (max-width:860px){.item > button{grid-template-columns:4ch 1fr auto}.item .ow,.item .cp{display:none}.item .det{grid-template-columns:1fr}}
+.board-wrap{max-height:52vh;overflow:auto;padding-right:2px}
+
+/* sequence */
+.seq{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;position:relative}
+@media (max-width:980px){.seq{grid-template-columns:1fr}}
+.win{appearance:none;border:1px solid var(--hair);background:var(--surface);border-radius:8px;padding:14px 14px;text-align:left;cursor:pointer;display:grid;gap:6px;align-content:start;min-height:120px}
+.win:hover{border-color:var(--axis)}
+.win.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.win .w{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.04em}
+.win .f{font-size:13.5px;color:var(--ink2)}
+.win .ev{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;color:var(--s2);letter-spacing:.06em;text-transform:uppercase}
+.win .ev i{width:8px;height:8px;background:var(--s2);border-radius:2px;display:inline-block}
+.seqdet{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:14px}
+@media (max-width:860px){.seqdet{grid-template-columns:1fr}}
+.gates{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.gates li{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:start;padding:8px 10px;border-radius:6px;font-size:13.5px}
+.gates li:hover{background:var(--wash)}
+.gates .dt{font-family:var(--mono);font-size:11.5px;color:var(--ink2);padding-top:2px}
+.gates .gt{font-weight:500}
+.gates .gs{font-size:12.5px;color:var(--ink2)}
+
+/* Q4 OKRs */
+.okrs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.okrs{grid-template-columns:1fr}}
+.okr{background:var(--surface);border:1px solid var(--hair);border-radius:8px;padding:14px 16px;display:grid;gap:10px;align-content:start}
+.okr .o{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.okr h3{font-size:15.5px;letter-spacing:-.01em;margin:0}
+.okr ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.okr li{display:grid;gap:5px;padding-top:8px;border-top:1px solid var(--hair);font-size:13.5px}
+.okr li .t{color:var(--ink)}
+.okr li .b{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
+.okr .trk{height:8px;background:var(--wash);border-radius:3px;position:relative}
+.okr .trk .base{position:absolute;left:0;top:0;bottom:0;background:var(--neutral-bar);border-radius:3px}
+.okr .trk .tg{position:absolute;top:-3px;bottom:-3px;border-left:2px solid var(--accent)}
+.okr .bt{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.okr .bt b{color:var(--ink);font-weight:500}
+.okr .bin{display:inline-flex;gap:6px;align-items:center;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.okr .bin i{width:8px;height:8px;border-radius:2px;border:1.5px solid var(--axis);display:inline-block}
+.okr .bin i.t{border-color:var(--accent);background:var(--accent-soft)}
+.okr li .n{font-size:12px;color:var(--muted)}
+
+/* asks */
+.asks{display:grid;gap:6px}
+.ask{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.6fr) minmax(130px,.7fr);gap:14px;padding:11px 14px;background:var(--surface);border:1px solid var(--hair);border-radius:6px;font-size:13.5px;align-items:start}
+.ask .d{font-weight:600}
+.ask .w{color:var(--ink2)}
+.ask .who{font-family:var(--mono);font-size:11.5px;color:var(--ink2)}
+.ask .who b{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+@media (max-width:860px){.ask{grid-template-columns:1fr}}
+
+/* close */
+.close{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px 56px;align-items:start;min-height:100%}
+@media (max-width:860px){.close{grid-template-columns:1fr}}
+.close h1{font-size:clamp(30px,4.6vw,58px);line-height:1.02;letter-spacing:-.03em;font-weight:700;max-width:16ch}
+.close h1 em{font-style:normal;color:var(--accent)}
+.close .lead{color:var(--ink2);font-size:16px;margin-top:16px;max-width:50ch;text-wrap:pretty}
+.cad{display:grid;gap:6px}
+.cad div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:9px 12px;border:1px solid var(--hair);border-radius:6px;background:var(--surface);font-size:13.5px;color:var(--ink2)}
+.cad div b{font-family:var(--mono);font-size:11px;color:var(--ink);font-weight:500;letter-spacing:.04em}
+.toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom,0px));transform:translate(-50%,10px);background:var(--tip-bg);color:var(--tip-ink);padding:8px 13px;border-radius:6px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:40}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+
+<div class="progress" aria-hidden="true"><i id="prog"></i></div>
+
+<main class="deck" id="deck">
+
+<!-- 1 · Cover -->
+<section class="slide on" id="s1" data-title="Cover" data-beat="Open">
+  <div class="slide-in" style="grid-template-rows:1fr">
+    <div class="cover">
+      <div>
+        <div class="eyebrow"><b>TRACTIAN / GLOBAL GROWTH</b> · LatAm · QBR · October 2026</div>
+        <h1 style="margin-top:18px">Q3 Review &amp;<br><em>Q4 Plan</em></h1>
+        <p class="lead">What shipped, what it moved, and what the LatAm seat commits to inside the Global Growth team this quarter.</p>
+        <div class="meta">
+          <div><b>Eduardo Kaneko</b> · Growth Lead, LatAm · reports to Evan</div>
+          <div>For Evan, Richard, Lucas, Malu, the Brazil RSDs and Steph</div>
+          <div>Numbers are meeting-reported as of Oct 5, 2026; each slide names its source</div>
+        </div>
+        <p class="hint">Use <kbd>←</kbd> <kbd>→</kbd> or the arrows below. <kbd>O</kbd> opens the slide list.</p>
+      </div>
+      <div class="dials">
+        <div class="dial"><div class="v">4 → 9<small>of 10 leads reached</small></div><div class="k">Brazil inbound contact rate after the September rebuild</div><div class="s">Growth weekly, Sep 22 · reported</div></div>
+        <div class="dial"><div class="v">12<small>S1 deals / week</small></div><div class="k">Highest weekly count since mid-August</div><div class="s">Evan 1:1, Sep 25</div></div>
+        <div class="dial"><div class="v">150<small>in-person confirmations</small></div><div class="k">TMD26, São Paulo, Oct 15. From 60 registrations before the WhatsApp activation</div><div class="s">Week 40 planning page · Oct</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Agenda -->
+<section class="slide" id="s2" data-title="Three beats" data-beat="Open">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Three beats, one decision at the end of each<small>Same shape as the Growth Weekly: updates become decisions and named next steps.</small></h2>
+      <div class="eyebrow"><b>Meeting map</b></div>
+    </div>
+    <div class="body">
+      <div class="agenda">
+        <button class="beat" data-go="3"><span class="n">01 / Q3 HIGHLIGHTS</span><h3>What shipped and what it moved</h3><p>Three proof stories, the Q3 OKR scorecard with the numbers that are and are not verified, and the gaps that kept recurring.</p><span class="s">Slides 3 – 6 · decision: what counts as evidence</span></button>
+        <button class="beat" data-go="7"><span class="n">02 / Q4 ROADMAP</span><h3>The LatAm seat in Global Growth</h3><p>Where Q4 starts, the 80/20 global rule, four pillars, the 30-item cross-functional roadmap and the week-by-week sequence.</p><span class="s">Slides 7 – 11 · decision: three active programs</span></button>
+        <button class="beat" data-go="12"><span class="n">03 / OKRS</span><h3>Q4 objectives and the asks</h3><p>Proposed Q4 OKRs aligned to deal size, efficiency and the regional route, then the seven decisions this plan depends on.</p><span class="s">Slides 12 – 14 · decision: lock targets</span></button>
+      </div>
+      <p class="note"><b>One rule for the whole deck.</b> Launches are not adoption, and adoption is not revenue. Every number is labeled by what it proves and what is still missing.</p>
+    </div>
+    <div class="foot">Format borrowed from the <b>Global Growth Weekly</b> template (Jul 14): housekeeping, launches, focus, performance, commitments.</div>
+  </div>
+</section>
+
+<!-- 3 · Q3 arc -->
+<section class="slide" id="s3" data-title="The Q3 arc" data-beat="Q3 highlights">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Q3 went from diagnosis to an operating model other regions want<small>Three phases. Tap a phase for what the notes show and what it implied.</small></h2>
+      <div class="eyebrow"><b>01 / Q3 highlights</b> · Jul 1 – Sep 30</div>
+    </div>
+    <div class="body">
+      <div class="arc" id="arc"></div>
+      <div class="arcdet">
+        <div class="card"><h3 id="arc-h"></h3><ul class="list" id="arc-l"></ul></div>
+        <div class="card"><h3>Implication</h3><p id="arc-i" style="font-size:14px;color:var(--ink2)"></p><div style="margin-top:12px;border-top:1px solid var(--hair);padding-top:10px"><div class="eyebrow">Q2 QBR context · Jul 7</div><p style="font-size:13.5px;color:var(--ink2);margin-top:4px">Brazil was the Q2 standout (new logos and revenue above Q1, shift from low-tier CMMS to higher-tier CBM). My Q3 focus was set there: Brazil mid-market broadening, reopen five closed-lost deals, UG2 upsell with the LX team.</p></div></div>
+      </div>
+    </div>
+    <div class="foot">Sources: <b>Q3 Growth Review &amp; Cross-functional Roadmap</b> (Sep 28, 307 meeting notes reviewed) · Q2 QBR (Jul 7) · BR upper mid-market hit list (Jul 31).</div>
+  </div>
+</section>
+
+<!-- 4 · Proof stories -->
+<section class="slide" id="s4" data-title="Three proof stories" data-beat="Q3 highlights">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Three proof stories, each with its number and its missing piece<small>Before and after, drawn to one scale per row. Gray is before, blue is after.</small></h2>
+      <div class="eyebrow"><b>01 / Q3 highlights</b> · what it moved</div>
+    </div>
+    <div class="body">
+      <div class="split">
+        <div class="card"><h3>What moved <span class="chip mono" style="margin-left:auto">meeting-reported</span></h3><div class="ba" id="ba"></div></div>
+        <div class="grid" style="display:grid;gap:12px">
+          <div class="card story">
+            <span class="tag">01 · Brazil funnel</span><h3>Inbound rebuilt as a pipeline, not a contact list</h3>
+            <dl class="kv"><div><dt>Problem</dt><dd>Stage-1 deals fell from ~150 (May) to ~50 (Aug). MQLs buried under bad ones, no SLA, one overwhelmed SDR.</dd></div><div><dt>Shipped</dt><dd>Lead-object pipeline (Sep 1), 11-step cadence with Lucas, 10-day automated sequence (Sep 25), LatAm inbound dashboard Lucas uses daily, Mexico in the same view.</dd></div></dl>
+            <details><summary>Still missing</summary><p>Exact denominator and whether "contact" means an attempt or a two-way conversation. Do not call 9/10 a 90% connection rate. MQL→S1 sat at ~10% in September because all ~307 leads were classified MQL.</p></details>
+          </div>
+          <div class="card story">
+            <span class="tag">02 · Seller tools</span><h3>Sellers now pick from Spotter, with Wake the Dead inside it</h3>
+            <dl class="kv"><div><dt>Moved</dt><dd>~50 logos claimed by ADRs in 15 minutes at launch (Aug 13). 72 logos worked in one week, ~250 in stage 1 (Sep 1). Spotter live with self-serve uploads; Mexico and EMEA lists in Sniper (Sep 22–25).</dd></div></dl>
+            <details><summary>Still missing</summary><p>A batch-level funnel from suggested logo to accepted, worked, S1, S2 and won. Selection is not conversion. Evan, Sep 1: "We still need to see the revenue impact."</p></details>
+          </div>
+          <div class="card story">
+            <span class="tag">03 · TMD and expansion</span><h3>A working activation motion for the Oct 15 event</h3>
+            <dl class="kv"><div><dt>Moved</dt><dd>Treble WhatsApp flow to 1,200 contacts took registrations from 60 to 100+ in a day (Sep 24). In-person confirmations: 116 (Sep 28), 150 (early Oct). A/B/C roundtable lists built with Gui.</dd></div></dl>
+            <details><summary>Still missing</summary><p>Downstream pipeline from attendees. UG2 closed its pilot at 0 of 10 expansion opportunities (see scorecard). Customer share of the list is reported as 7% in one note and 70% in another; reconcile before using either.</p></details>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">Sources: Growth weekly <b>Sep 1</b> and <b>Sep 22</b> · Evan 1:1 <b>Sep 18</b> and <b>Sep 25</b> · Week 40 page · Q3 Growth Review (Sep 28). Evan, Sep 25: "You've been 100% successful" at being the connective tissue between Growth and Sales.</div>
+  </div>
+</section>
+
+<!-- 5 · Q3 OKR scorecard -->
+<section class="slide" id="s5" data-title="Q3 OKR scorecard" data-beat="Q3 highlights">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Q3 OKRs: one met, one missed, one I never counted<small>Locked Jul 2 with Evan. Tap a key result for the evidence and what is still open.</small></h2>
+      <div class="eyebrow"><b>01 / Q3 highlights</b> · scorecard</div>
+    </div>
+    <div class="body">
+      <div class="score" id="score"></div>
+      <p class="note"><b>Team level.</b> Evan, Oct 1: the team's Q3 OKRs were met, with positive recognition. Mine are graded on the three above. The honest read: the operating model is real and adopted, but the revenue line is not yet in a report I own.</p>
+    </div>
+    <div class="foot">Sources: Current Weekly State (Sep 9) · Growth weekly <b>Sep 1</b> (BR red alert) · Evan 1:1 <b>Sep 1</b>, <b>Oct 1</b> · Cross-functional Roadmap R03, R05, R13.</div>
+  </div>
+</section>
+
+<!-- 6 · Gaps -->
+<section class="slide" id="s6" data-title="What Q3 taught us" data-beat="Q3 highlights">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Five gaps kept recurring. Each has a Q4 fix on the roadmap<small>Evan flagged six active priorities as too many in August and asked for quantified, linked results in September.</small></h2>
+      <div class="eyebrow"><b>01 / Q3 highlights</b> · lessons</div>
+    </div>
+    <div class="body">
+      <div class="gaps">
+        <div class="gap"><div class="g">The reporting loop is not closed</div><p>Wake the Dead, UG2, inbound before/after: a live dashboard is progress, not a reconciled readout with cohort and attribution rules.</p><div class="fix"><b>Q4 fix</b>R03 funnel autopsy, R05 batch-level funnel, one report linked in the 1:1 doc.</div></div>
+        <div class="gap"><div class="g">Shared data problems hit everything at once</div><p>Plant identity, regional associations, duplicate plants and logo-level locking show up in expansion, Spotter, international lists and page generation.</p><div class="fix"><b>Q4 fix</b>R07 plant object (David, Ramalho, Malu) and R06 Sniper→HubSpot handoff, solved once.</div></div>
+        <div class="gap"><div class="g">Launches confused with adoption</div><p>A demo gets enthusiasm; the page builder had one real link in the Sep 21 review. Accepting a logo, generating a page and booking a meeting are different events.</p><div class="fix"><b>Q4 fix</b>Seller activation defined as "accepted AND worked"; R08 usage tracking.</div></div>
+        <div class="gap"><div class="g">Process changes need a joint owner</div><p>Attribution changes, autoresponder overlap, disqualification rules and UG2 complaints all crossed Growth, Pre-sales and Lifecycle without one change record.</p><div class="fix"><b>Q4 fix</b>A short owner-and-handoff agreement, plus the attribution dispute doc (Oct 1 action).</div></div>
+        <div class="gap"><div class="g">Capacity distorted the roadmap</div><p>Performance backfill open since July, SDR turnover removed tribal knowledge, and an all-Brazil focus let the US decline go unnoticed.</p><div class="fix"><b>Q4 fix</b>WIP limit of three programs; interim paid coverage with an owner, a limit and an exit (R19).</div></div>
+      </div>
+    </div>
+    <div class="foot">Source: <b>Q3 Growth Review</b>, "The gaps that keep recurring" (Sep 28) · Evan 1:1 Aug 26, Sep 1, Sep 25.</div>
+  </div>
+</section>
+
+<!-- 7 · Where Q4 starts -->
+<section class="slide" id="s7" data-title="Where Q4 starts" data-beat="Q4 roadmap">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Q4 starts at ~14 stage-1 deals a week. The target is 80 a month<small>Drag the slider to see what a weekly rate means for the month. Evan, Oct 1: back to 80 in about a month is viable.</small></h2>
+      <div class="eyebrow"><b>02 / Q4 roadmap</b> · starting point</div>
+    </div>
+    <div class="body">
+      <div class="sim">
+        <div class="card">
+          <h3>Weekly rate → monthly deals <span class="chip mono" style="margin-left:auto">4.33 weeks / month</span></h3>
+          <label for="rate" style="font-size:13px;color:var(--ink2)">Stage-1 deals per week in Brazil</label>
+          <input class="range" type="range" id="rate" min="8" max="28" step="1" value="14" aria-describedby="rate-out">
+          <div class="ticks"><span>8</span><span>12</span><span>16</span><span>20</span><span>24</span><span>28</span></div>
+          <div class="readout" id="rate-out">
+            <div class="ro"><div class="k">Per week</div><div class="v" id="r-w">14</div></div>
+            <div class="ro"><div class="k">Per month</div><div class="v" id="r-m">61</div></div>
+            <div class="ro"><div class="k">Gap to 80</div><div class="v" id="r-g">−19</div></div>
+          </div>
+          <div class="meter" aria-hidden="true"><div class="fill" id="r-f" style="width:61%"></div><div class="tgt"><span>80 / month</span></div><span class="ax" style="left:0">0</span><span class="ax" style="right:0">100</span></div>
+          <p style="font-size:13px;color:var(--ink2);margin-top:30px" id="r-t">At ~14 a week the month lands near 61. Twenty a week clears 80.</p>
+        </div>
+        <div class="card">
+          <h3>What we know going in</h3>
+          <div class="facts">
+            <div class="fact"><span class="n">~14 / wk</span><span>Current Brazil stage-1 rate (Evan 1:1, Oct 1). Twelve was the best week since mid-August.</span></div>
+            <div class="fact"><span class="n">~600K</span><span>Current budget, versus ~1M when Brazil last ran at 80 deals a month. Lost-lead and contact systems are more mature now, so similar numbers on the same budget are the first bet.</span></div>
+            <div class="fact"><span class="n">~10%</span><span>September MQL→S1 conversion, down from 17% in August and 30–37% earlier. Denominator inflated: all ~307 leads classified MQL. Still concerning after that correction.</span></div>
+            <div class="fact"><span class="n">0 → 3</span><span>Deal 1s from paid search in the first half of September, including branded: urgent, not a holiday effect (Growth weekly, Sep 15).</span></div>
+            <div class="fact"><span class="n">Oct</span><span>New trainee SDRs arrive early October. The hypothesis: maximize the inbound engine before layering more ad spend.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">Sources: Evan 1:1 <b>Oct 1</b> (80 deals, budget, 14/week) · Evan 1:1 <b>Sep 18</b> (MQL conversion) · Growth weekly <b>Sep 15</b>. Monthly figures are rate × 4.33, not a forecast.</div>
+  </div>
+</section>
+
+<!-- 8 · Global Growth team -->
+<section class="slide" id="s8" data-title="The LatAm seat in Global Growth" data-beat="Q4 roadmap">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Q4 theme is market leadership and expansion. My seat is LatAm, built to scale<small>Global Growth kicked off Sep 14 with one rule: 80% global mindset, 20% local adaptation. Regional experiments converge into globally scalable outputs.</small></h2>
+      <div class="eyebrow"><b>02 / Q4 roadmap</b> · the team</div>
+    </div>
+    <div class="body">
+      <div class="team">
+        <div class="seat"><span class="r">Global Head of Growth</span><span class="w">Evan</span><p>Funnel and cohort milestones. Wants notes, links and quantified results. Owns the Q4 draft and the regional routes.</p></div>
+        <div class="seat me"><span class="r">LatAm · Brazil + Mexico · EMEA support</span><span class="w">Eduardo</span><p>Brazil funnel ownership (granted Sep 1, condition: no surprises). Mexico rollout with Pepeu's ADRs. EMEA ABM proposal with Scopel. BR/MX SDR model requested for the US (Sep 28).</p></div>
+        <div class="seat"><span class="r">North America</span><span class="w">Steph</span><p>Heyreach LinkedIn prospecting experiment, intent framework V2, US Wake the Dead scoping. Co-owner of the US SDR operations reform with me.</p></div>
+      </div>
+      <div class="split">
+        <div class="tbl"><table>
+          <thead><tr><th>Region</th><th>Q4 focus (Sep 22, Sep 28)</th><th>My role</th></tr></thead>
+          <tbody>
+            <tr><td class="k">Brazil</td><td>Fix paid pipeline efficiency (operational, not experimental). Pioneer in-platform expansion campaigns. Treat acquisition as the strategy with paid as one tactic. Grow Sniper usage as an internal growth product.</td><td>Owner</td></tr>
+            <tr><td class="k">Mexico</td><td>Restart paid (Facebook) with audience segmentation with Kate to lift ICP quality and deal size. Spotter, Wake the Dead and weekly lists live with Pepeu's team.</td><td>Owner of lists and pipeline; Pepeu tells the story</td></tr>
+            <tr><td class="k">United States</td><td>Social-heavy: Heyreach to EB and corporate personas. Big Four programs: out-of-plant expansion, multimodal GTM, Wake the Dead, ARA. SDR ops reformed on the BR/MX model.</td><td>Runbook and model to Steph</td></tr>
+            <tr><td class="k">EMEA</td><td>ABM motion: shrink ~1,000 food companies (from 40,000) to ~100 priority accounts; "we already work with your sibling plant in the Americas". Two AEs and one SE; any ad budget must be CPM/CPA-backed.</td><td>Proposal with Scopel, Sean</td></tr>
+          </tbody>
+        </table></div>
+        <div class="card">
+          <h3>Global engines the team builds together</h3>
+          <ul class="list">
+            <li><b>Intent signal engine</b>: champion tracking, violations, incidents; EXA signals into Clay, HubSpot and Sniper. I add intent as a weight in lead score for BR and US first.</li>
+            <li><b>Expansion signals</b>: standardize when a customer is ready, who gets the signal and the next conversation.</li>
+            <li><b>ABM</b>: plastics and packaging; 2027 planning starts with Alyssa and Jillian.</li>
+            <li><b>Co-marketing</b>: first partner campaign with MSS.</li>
+          </ul>
+          <div class="eyebrow" style="margin-top:12px">80 / 20</div>
+          <div class="eighty"><span>Global by design</span><span>Local</span></div>
+          <p style="font-size:12.5px;color:var(--ink2)">Everything I build in Brazil ships as a model another region can adopt without me in the room.</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">Sources: Global Growth kickoff <b>Sep 14</b> · Growth weekly <b>Sep 22</b> (Q4 roadmap) · Growth meeting <b>Sep 28</b> · Evan 1:1 <b>Sep 25</b> (EMEA).</div>
+  </div>
+</section>
+
+<!-- 9 · Four pillars -->
+<section class="slide" id="s9" data-title="Four pillars" data-beat="Q4 roadmap">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Four pillars, agreed with Evan on Oct 1<small>Growth product, acquisition, paid and expansion. Each pillar names what it ships, why, and what done looks like in someone else's report.</small></h2>
+      <div class="eyebrow"><b>02 / Q4 roadmap</b> · priorities</div>
+    </div>
+    <div class="body">
+      <div class="tabs" role="tablist" id="ptabs"></div>
+      <div class="pillar" id="pillar" role="tabpanel"></div>
+    </div>
+    <div class="foot">Source: Evan 1:1 <b>Oct 1</b> ("OKRs e Prioridades do Q4") · Growth meeting <b>Sep 28</b> · Cross-functional Roadmap R-items in brackets.</div>
+  </div>
+</section>
+
+<!-- 10 · Roadmap board -->
+<section class="slide" id="s10" data-title="Cross-functional roadmap" data-beat="Q4 roadmap">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>The cross-functional roadmap: 30 items, 10 in "Now", not 30 projects for me<small>Filter by focus. Tap an item for its next milestone, dependencies and owner. Dates are proposed checkpoints unless marked recorded.</small></h2>
+      <div class="eyebrow"><b>02 / Q4 roadmap</b> · portfolio</div>
+    </div>
+    <div class="body">
+      <div class="filters" id="rfilters"></div>
+      <div class="board-wrap"><div class="board" id="board"></div></div>
+    </div>
+    <div class="foot">Source: Notion database <b>Cross-functional Roadmap · Q4 2026</b> (baseline Sep 28). Now = active sub-deliverables; Next = gated on capacity; Dependency = another team delivers; Monitor = contribute an input; Later = parked with a resume condition.</div>
+  </div>
+</section>
+
+<!-- 11 · Sequence -->
+<section class="slide" id="s11" data-title="Q4 sequence" data-beat="Q4 roadmap">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>The sequence: evidence first, event in the middle, scale only what proved out<small>Tap a window for its exit criterion. TMD is the fixed point on Oct 15.</small></h2>
+      <div class="eyebrow"><b>02 / Q4 roadmap</b> · Oct – Dec</div>
+    </div>
+    <div class="body">
+      <div class="seq" id="seq"></div>
+      <div class="seqdet">
+        <div class="card"><h3 id="seq-h"></h3><p id="seq-f" style="font-size:14px;color:var(--ink2)"></p><div style="margin-top:12px;border-top:1px solid var(--hair);padding-top:10px"><div class="eyebrow">Exit criterion</div><p id="seq-e" style="font-size:14px;margin-top:4px"></p></div></div>
+        <div class="card"><h3>Gates I will report against</h3>
+          <ul class="gates">
+            <li><span class="dt">Oct 9</span><span><span class="gt">Two BR sellers active on the page builder</span><br><span class="gs">Tracked links in the existing workflow, real sends measured.</span></span></li>
+            <li><span class="dt">Oct 15</span><span><span class="gt">TMD executed with clean records</span><br><span class="gs">Follow-up owners, SLA and CRM fields assigned before the event.</span></span></li>
+            <li><span class="dt">Oct 31</span><span><span class="gt">Inbound handed to Lucas and Sean</span><br><span class="gs">They run the queue and media; I read the dashboard weekly.</span></span></li>
+            <li><span class="dt">Nov 30</span><span><span class="gt">Sourced-pipeline dashboard live</span><br><span class="gs">Stage-1 deals sourced by WtD, Spotter and lists, per week, BR and MX.</span></span></li>
+            <li><span class="dt">Dec 31</span><span><span class="gt">Wake the Dead revenue in a report</span><br><span class="gs">Closed-won ARR linked in the 1:1 doc.</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot">Source: <b>Q3 Growth Review</b>, "Sequence from here" (Sep 28). Windows are proposed sequencing; calendar invitations were not verified.</div>
+  </div>
+</section>
+
+<!-- 12 · Q4 OKRs -->
+<section class="slide" id="s12" data-title="Q4 OKRs (proposed)" data-beat="OKRs">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Proposed Q4 OKRs: four objectives, every key result countable by someone else<small>Aligned to the team objectives (deal size, efficiency) and the regional route (paid pipeline efficiency, campaign expansion, Sniper usage). Gray is the baseline, the blue mark is the target.</small></h2>
+      <div class="eyebrow"><b>03 / OKRs</b> · <span class="chip warn"><span class="dot"></span>draft, to lock with Evan</span></div>
+    </div>
+    <div class="body">
+      <div class="okrs" id="okrs"></div>
+    </div>
+    <div class="foot">Alignment source: Evan 1:1 <b>Oct 1</b>. Baselines from Sep 9 Weekly State, Sep 18 and Sep 25 1:1s, Oct 1 1:1. Targets are proposals for the next growth meeting, not commitments.</div>
+  </div>
+</section>
+
+<!-- 13 · Asks -->
+<section class="slide" id="s13" data-title="Decisions needed" data-beat="OKRs">
+  <div class="slide-in">
+    <div class="slide-head">
+      <h2>Seven decisions this plan depends on<small>Each one names why it matters and who decides. None of them is a complaint about delivery.</small></h2>
+      <div class="eyebrow"><b>03 / OKRs</b> · asks</div>
+    </div>
+    <div class="body">
+      <div class="asks" id="asks"></div>
+    </div>
+    <div class="foot">Sources: Evan 1:1 <b>Oct 1</b> (budget, headcount, attribution) · Evan 1:1 <b>Sep 25</b> (plant object, EMEA) · Growth meeting <b>Sep 28</b> (compensation) · Q3 Growth Review "Decisions and overdue confirmations".</div>
+  </div>
+</section>
+
+<!-- 14 · Close -->
+<section class="slide" id="s14" data-title="Close" data-beat="OKRs">
+  <div class="slide-in" style="grid-template-rows:1fr auto">
+    <div class="close">
+      <div>
+        <div class="eyebrow"><b>TRACTIAN / GLOBAL GROWTH</b> · Q4 2026</div>
+        <h1 style="margin-top:16px">From launches to <em>counted outcomes.</em></h1>
+        <p class="lead">Q3 built the trust and the operating model. Q4 turns a growing collection of useful projects into three measurable, reliably operated revenue programs, each with an owner, a milestone and a readout.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px">
+          <span class="chip acc"><span class="dot"></span>Brazil funnel reliability and evidence</span>
+          <span class="chip acc"><span class="dot"></span>TMD conversion and follow-up</span>
+          <span class="chip acc"><span class="dot"></span>Revenue from shipped seller tools</span>
+        </div>
+      </div>
+      <div class="cad">
+        <div class="eyebrow" style="display:block;border:0;background:none;padding:0">Operating cadence</div>
+        <div><b>MON · 20 MIN</b><span>Update each program's result, next milestone, blocker and evidence checkpoint before the global review.</span></div>
+        <div><b>1:1 · DECISIONS</b><span>One screen: three program outcomes, changed assumptions, at most three decisions, links to the work.</span></div>
+        <div><b>MIDWEEK · 15 MIN</b><span>Only the people needed to unblock one handoff: owner, next artifact, date.</span></div>
+        <div><b>FRI · 20 MIN</b><span>Attach evidence, close commitments, mark superseded work, name next week's tradeoffs.</span></div>
+        <div><b>EVERY MEETING</b><span>Ends with decision / owner / date / evidence.</span></div>
+      </div>
+    </div>
+    <div class="foot">Eduardo Kaneko · Growth Lead, LatAm · eduardo@kaneko.is · Built from Notion meeting notes Jun 2 – Oct 1, 2026 and the Cross-functional Roadmap · Q4 2026.</div>
+  </div>
+</section>
+
+</main>
+
+<nav class="rail" aria-label="Slides">
+  <div class="brand"><b>TRACTIAN / GLOBAL GROWTH</b> · Q3 Review &amp; Q4 Plan · <span id="beat"></span></div>
+  <button class="nbtn" id="ovbtn" aria-haspopup="dialog" title="Slide list (O)">Slides</button>
+  <button class="nbtn" id="prev" aria-label="Previous slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div class="counter"><b id="cur">1</b> / <span id="tot">14</span></div>
+  <button class="nbtn" id="next" aria-label="Next slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</nav>
+
+<div class="ov-back" id="ovback"></div>
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="Slide list">
+  <div class="h"><h3>Slides</h3><button class="nbtn" id="ovclose" aria-label="Close">Close</button></div>
+  <ol id="ovlist"></ol>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+
+/* ---------- deck navigation ---------- */
+const slides=$$(".slide");
+const N=slides.length;
+let cur=0;
+$("#tot").textContent=N;
+function go(i,push){
+  i=Math.max(0,Math.min(N-1,i));
+  slides.forEach((s,j)=>{s.classList.toggle("on",j===i);});
+  cur=i;
+  $("#cur").textContent=i+1;
+  $("#prog").style.width=((i+1)/N*100)+"%";
+  $("#prev").disabled=i===0;$("#next").disabled=i===N-1;
+  $("#beat").textContent=slides[i].dataset.beat;
+  slides[i].scrollTop=0;
+  if(push!==false){try{history.replaceState(null,"","#s"+(i+1));}catch(e){}}
+  $$("#ovlist button").forEach((b,j)=>b.classList.toggle("now",j===i));
+}
+$("#prev").addEventListener("click",()=>go(cur-1));
+$("#next").addEventListener("click",()=>go(cur+1));
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>go(+b.dataset.go-1)));
+document.addEventListener("keydown",e=>{
+  const t=e.target;
+  if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"))return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();go(cur+1);}
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(cur-1);}
+  else if(e.key==="Home"){go(0);}else if(e.key==="End"){go(N-1);}
+  else if(e.key.toLowerCase()==="o"){toggleOv();}
+  else if(e.key==="Escape"){toggleOv(false);}
+});
+/* overview */
+const ovl=$("#ovlist");
+slides.forEach((s,i)=>{
+  const li=document.createElement("li");
+  li.innerHTML=`<button type="button"><span class="n">${String(i+1).padStart(2,"0")}</span><span class="t">${esc(s.dataset.title)}</span><span class="s">${esc(s.dataset.beat)}</span></button>`;
+  li.firstChild.addEventListener("click",()=>{go(i);toggleOv(false);});
+  ovl.appendChild(li);
+});
+function toggleOv(force){
+  const on=force===undefined?!$("#ov").classList.contains("on"):force;
+  $("#ov").classList.toggle("on",on);$("#ovback").classList.toggle("on",on);
+}
+$("#ovbtn").addEventListener("click",()=>toggleOv());
+$("#ovclose").addEventListener("click",()=>toggleOv(false));
+$("#ovback").addEventListener("click",()=>toggleOv(false));
+/* swipe */
+let tx=null;
+document.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener("touchend",e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>70){go(cur+(dx<0?1:-1));}tx=null;},{passive:true});
+
+/* ---------- slide 3: arc ---------- */
+const ARC=[
+ {when:"July",what:"Diagnosis and alignment",sub:"Learn the sales workflow, name the gaps, connect the right teams.",
+  h:"What the notes show",items:["Trust and economic-buyer gaps named with the BR sales team; expansion discovery started.","SpinGen / Sherlock rollout; Wake the Dead scoped from the interview case study into a Q3 KR.","BR upper mid-market hit list built with Buzz: 75 accounts, 37 on list, 24 with the full layer, EB named on 99%.","First requests for documentation and sequencing from Evan."],
+  imp:"My value began with understanding the sales workflow and connecting the right teams. Nothing shipped yet counted toward revenue."},
+ {when:"August",what:"Tools become workflows",sub:"Build inside existing seller behavior so adoption is the default.",
+  h:"What the notes show",items:["Wake the Dead moved into Sniper (Aug 13): ~50 logos claimed in 15 minutes. Evan: \"This is fantastic. I want to commend you.\"","Spotter designed as the intelligent logo screen for ADRs; one-pagers became trackable pages.","UG2 expansion pilot launched, then paused Aug 26 after champion complaints.","Inbound analysis exposed a flat, opaque, contact-level workflow. Evan flagged six active priorities as too many."],
+  imp:"Building within existing seller behavior improved adoption. Features still needed distribution, ownership and proof."},
+ {when:"September",what:"Operating model and replication",sub:"A lead-object pipeline, shared BR/MX reporting, and a request to copy it to the US.",
+  h:"What the notes show",items:["BR inbound pipeline launched Sep 1 mirroring outbound; 11-step cadence; LatAm inbound dashboard used daily.","Spotter live and self-serve; Mexico and EMEA priority lists pushed into Sniper; priority tag for the two EMEA AEs.","Mexico added to the global pipeline view (Sep 25); 12 S1s in a week, highest since mid-August.","Sep 28: Evan asks Steph and me to reform US SDR operations on the BR/MX model."],
+  imp:"The work is becoming a reusable operating capability. Measurement and dependable execution now matter more than launch count."}
+];
+const arcEl=$("#arc");
+ARC.forEach((a,i)=>{
+  const b=document.createElement("button");b.type="button";b.setAttribute("aria-pressed",i===2);
+  b.innerHTML=`<span class="when">${a.when}</span><span class="what">${esc(a.what)}</span><span class="sub">${esc(a.sub)}</span>`;
+  b.addEventListener("click",()=>setArc(i));arcEl.appendChild(b);
+});
+function setArc(i){
+  $$("#arc button").forEach((b,j)=>{b.classList.toggle("on",j===i);b.setAttribute("aria-pressed",j===i);});
+  const a=ARC[i];$("#arc-h").textContent=a.when+" · "+a.h;
+  $("#arc-l").innerHTML=a.items.map(x=>`<li>${esc(x)}</li>`).join("");
+  $("#arc-i").textContent=a.imp;
+}
+setArc(2);
+
+/* ---------- slide 4: before / after ---------- */
+const BA=[
+ {k:"Inbound contact rate",u:"of every 10 hand-raisers reached",a:4,b:9,max:10,fmt:v=>v+" / 10",src:"Growth weekly, Sep 22 · reported, denominator not yet defined"},
+ {k:"Stage-1 deals per week",u:"Brazil inbound",a:9,b:12,max:24,tgt:20,tgtl:"Q4 target 20",fmt:v=>String(v),src:"Evan 1:1, Sep 18 → Sep 25 · team goal was ≥10"},
+ {k:"TMD registrations",u:"one day after the Treble WhatsApp flow",a:60,b:100,bl:"100+",max:160,fmt:v=>String(v),src:"Evan 1:1, Sep 25 · 1,200 contacts messaged"},
+ {k:"Stage-1 deals per month",u:"the problem we started from, May → August",a:150,b:50,max:160,down:true,fmt:v=>"~"+v,src:"Growth weekly, Sep 1 · Brazil red alert"}
+];
+$("#ba").innerHTML=BA.map(r=>{
+  const pa=(r.a/r.max*100).toFixed(1)+"%",pb=(r.b/r.max*100).toFixed(1)+"%";
+  const tgt=r.tgt?`<div class="ba-tgt" style="--pct:${(r.tgt/r.max*100).toFixed(1)}%"><span>${esc(r.tgtl)}</span></div>`:"";
+  return `<div class="ba-row"><div class="k">${esc(r.k)}<span class="u">${esc(r.u)}</span></div>
+   <div><div class="ba-bars"><div class="ba-labs"><span>before</span><span>after</span></div>
+    <div class="ba-trks"><div>${tgt}
+     <div class="ba-bar"><div class="trk"><div class="fill" data-w="${pa}"></div><span class="val" style="--pct:${pa}">${esc(r.fmt(r.a))}</span></div></div>
+     <div class="ba-bar after${r.down?" down":""}"><div class="trk"><div class="fill" data-w="${pb}"></div><span class="val" style="--pct:${pb}">${esc(r.bl||r.fmt(r.b))}</span></div></div>
+    </div></div>
+   </div><div class="ba-src">${esc(r.src)}</div></div></div>`;
+}).join("");
+function animateBA(){$$("#ba .fill").forEach(f=>{f.style.width=f.dataset.w;});}
+animateBA();
+
+/* ---------- slide 5: Q3 scorecard ---------- */
+const Q3=[
+ {kr:"KR1 · Acquisition",tg:"30+ net-new outbound logos, primarily mid-market",cls:"crit",st:"Below forecast",num:"−9",l:"vs. the BR new-logo goal (forecast, Sep 1)",
+  ev:["Brazil was forecast to miss the Q3 new-logo goal by ~9 logos; Q1 and Q2 goals were hit (Growth weekly, Sep 1).","I own the enablement layer (Sherlock, Spotter, inbound pipeline, priority lists). Net-new logos and BR ARR are the commission-linked metrics (Evan, Aug 26).","The final Q3 count was never pulled by me. Confirm in HubSpot before the QBR."],
+  gap:"The number lives in Sales reports, not in one I own. Q4 fix: the sourced-pipeline report (R03, R05) so Growth's share of logos is visible every week."},
+ {kr:"KR2 · Closed-loss · Wake the Dead",tg:"5 reopened closed-lost deals with an economic buyer attached (GWTH-956)",cls:"good",st:"Met",num:"≥5",l:"reopened with EB · verified Sep 9",
+  ev:["~50 logos claimed by ADRs in the first 15 minutes (Aug 13); 72 worked in one week and ~250 in stage 1 by Sep 1.","Batch 4 launched Sep 8; the write-up was posted to GTM engineering.","Wake the Dead now ships inside Spotter and went to Mexico with a priority list (Sep 22)."],
+  gap:"Not yet written as a HubSpot report link in the 1:1 doc, and no closed-won revenue attributed. Evan, Sep 1: \"We still need to see the revenue impact.\" Q4 O1 carries it."},
+ {kr:"KR3 · Expansion · UG2",tg:"10 expansion opportunities opened (Expansion deal type, EB attached, Sales-accepted) (GWTH-957)",cls:"crit",st:"Missed",num:"0 / 10",l:"opportunities opened",
+  ev:["UG2 paused Aug 26: 163 users reached, 24.8% open rate, two champion complaints.","Post-mortem discussed; account-by-account closure with the nine TAMs is still open (R13).","Expansion needs plant-level ownership in HubSpot and TAM consent before Growth can run outreach (R07, R11)."],
+  gap:"The pivot is TAM-led: Sales Page Builder in Brazil, out-of-plant cohort, TMD expansion follow-up. It becomes Q4 O4 with a countable cohort instead of an email blast."}
+];
+$("#score").innerHTML=Q3.map((k,i)=>`<div class="kr" id="kr${i}">
+ <button type="button" aria-expanded="false"><div><div class="t">${esc(k.kr)}</div><div class="tg">${esc(k.tg)}</div></div>
+ <div class="nm"><span class="num">${esc(k.num)}</span><span class="l">${esc(k.l)}</span></div>
+ <span class="chip ${k.cls}"><span class="dot"></span>${esc(k.st)}</span></button>
+ <div class="det"><div><h4>Evidence</h4><ul>${k.ev.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div><div><h4>What is still open</h4><p>${esc(k.gap)}</p></div></div></div>`).join("");
+$$("#score .kr > button").forEach(b=>b.addEventListener("click",()=>{const k=b.parentElement;const o=!k.classList.contains("open");k.classList.toggle("open",o);b.setAttribute("aria-expanded",o);}));
+$("#kr1").classList.add("open");$("#kr1 > button").setAttribute("aria-expanded","true");
+
+/* ---------- slide 7: rate slider ---------- */
+const rate=$("#rate");
+function fmtRate(){
+  const w=+rate.value,m=Math.round(w*4.33),g=m-80;
+  $("#r-w").textContent=w;$("#r-m").textContent=m;
+  const ge=$("#r-g");ge.textContent=(g>=0?"+":"−")+Math.abs(g);ge.className="v "+(g>=0?"good":"crit");
+  $("#r-f").style.width=Math.min(100,m)+"%";
+  rate.style.setProperty("--pct",((w-8)/20*100)+"%");
+  let t;
+  if(m>=80)t=`At ${w} a week the month lands near ${m}, ${g>0?g+" above":"on"} the 80 target. Sustain it four weeks before asking for more budget.`;
+  else if(w<=14)t=`At ${w} a week the month lands near ${m}, ${Math.abs(g)} short. This is roughly where we are now.`;
+  else t=`At ${w} a week the month lands near ${m}, still ${Math.abs(g)} short of 80. Twenty a week clears it.`;
+  $("#r-t").textContent=t;
+}
+rate.addEventListener("input",fmtRate);fmtRate();
+
+/* ---------- slide 9: pillars ---------- */
+const PILLARS=[
+ {k:"Growth product",key:"A",one:"Be the bridge between Growth and Product. Make Sniper the system sellers work from.",
+  why:"Evan, Sep 28: treat Sniper like an internal growth product and build levers for its usage. Spotter is live and already produced stage-1 deals, but nothing counts them yet. Sniper is feature-rich and not actionable enough; sellers still live in HubSpot.",
+  items:[["R05","Spotter results dashboard: stage-1 deals sourced per ADR, per week"],["R02","Lead scoring v4 on the lead object with intent signals as a weight; a publish decision and a rollback plan"],["R08","Sniper usage tracking with Malu; backlog ordered by observed activation and execution drop-offs"],["R06","Sniper ↔ HubSpot swim lanes: source and prioritize in Sniper, call, email and follow up in HubSpot; one review-and-approve handoff, no CSV round trips"],["R07","Plant-level recommendations once the plant object is authoritative"]],
+  done:"Every BR and MX ADR zeroes out Spotter weekly, and the dashboard shows what it sourced."},
+ {k:"Acquisition",key:"B",one:"New logos in Brazil, Mexico and LatAm. Acquisition is the strategy; paid is one tactic inside it.",
+  why:"Brazil was forecast to miss the Q3 new-logo goal by ~9. Hypothesis from Oct 1: high-quality new logos may be saturating, but each new logo opens several plants, so acquisition splits into new logos and expansion sales. Top-of-funnel materials (e-books, content ads) feed both.",
+  items:[["R05","Wake the Dead: from reopened deals to closed-won ARR in a HubSpot report"],["R09","Mexico rollout: Spotter, Wake the Dead and weekly lists with Pepeu's ADRs; Pepeu reports the results"],["R16","Brazil ABM priorities refreshed against live open deals, EB coverage and TMD participation"],["R18","US inbound replication with Steph: BR/MX runbook, US differences mapped, one joint owner per deliverable"],["R17","EMEA / Poland: ~1,000 food companies down to ~100 priority accounts, a one-week playbook and a justified pilot budget"]],
+  done:"Growth-sourced stage-1 deals counted weekly for Brazil and Mexico, in one link Evan can forward to Richard, Igor and Pepeu."},
+ {k:"Paid",key:"C",one:"Keep and improve efficiency. Align paid with the score system and the inbound pipeline.",
+  why:"Paid pipeline efficiency dropped after Prado left (Sep 22). Fixing it is an operational need, not an experiment (Sep 28). Shared between Evan, Sean and me until the LatAm performance hire lands; Sean has the craft, Brazil needs a different approach.",
+  items:[["V8","Meta Demo Form V8 translated and live in Brazil after the 1–2 week US test"],["R04","Paid feedback loop: attribution release, Meta freshness, LinkedIn ad-level joins, shared exclusions"],["SEM","Brazil Google and Bing search: add the high-performing US keyword groups that were missing"],["R19","Interview with Priscilla and Sean for the LatAm performance specialist; interim coverage with an owner, a limit and an exit"],["$","Budget case: ~600K today vs ~1M when Brazil ran at 80 deals a month; prove efficiency first, then ask"]],
+  done:"Cost per SAL reported weekly next to sourced pipeline; campaigns optimize on fit scores, and I do not own media."},
+ {k:"Expansion",key:"D",one:"Plant strategy: every new logo is an entry into every plant of the group.",
+  why:"Expansion is expected to drive revenue for the next ~4 quarters (Sep 25). A company with 17 plants and 5 open deals cannot be locked to one rep. About 70% of the TMD list are current customers, which makes it the warmest expansion cohort of the quarter.",
+  items:[["R10","Sales Page Builder in Brazil: two early-adopter sellers, tracked links inside the existing workflow, real sends measured"],["R11","Out-of-plant cohort: proof plant, target plant, relationship sponsor, buyer, named owner and outreach route"],["R15","TMD Oct 15: segment-by-segment runbook, follow-up owners, SLA, CRM fields, results checkpoint"],["R12","In-app pilot with Product: UG2 CTA and empty states, only after event tracking works"],["R13","UG2 learning loop closed with the nine TAMs; TAM-led playbook with Eric"]],
+  done:"Expansion opportunities opened from these cohorts, counted, with an owner on each. Reopened deals and new opportunities reported separately."}
+];
+const ptabs=$("#ptabs");
+PILLARS.forEach((p,i)=>{
+  const b=document.createElement("button");b.className="tab";b.type="button";b.setAttribute("role","tab");b.id="ptab"+i;
+  b.innerHTML=`<span class="k">${p.key}</span>${esc(p.k)}`;b.addEventListener("click",()=>setPillar(i));ptabs.appendChild(b);
+});
+function setPillar(i){
+  $$("#ptabs .tab").forEach((b,j)=>b.setAttribute("aria-selected",j===i));
+  const p=PILLARS[i];
+  $("#pillar").innerHTML=`<div><div class="one">${esc(p.one)}</div><p class="why">${esc(p.why)}</p><div class="done"><b>Done when</b>${esc(p.done)}</div></div>
+   <ol>${p.items.map(x=>`<li><span class="id">${esc(x[0])}</span><span>${esc(x[1])}</span></li>`).join("")}</ol>`;
+}
+setPillar(0);
+
+/* ---------- slide 10: roadmap board ---------- */
+const RM=[
+ {id:"R01",t:"Brazil inbound: reliable first response and SDR execution",f:"Now",ws:"Brazil funnel",o:"Eduardo + Lucas / Guilherme (Pre-sales)",p:"Gabriel, Gustavo / Maltese; Enablement",n:"Audit a recent hand-raiser cohort end to end; resolve owner mismatches, unlogged WhatsApp/calls, missed first touches and no-shows; document the SDR-to-AE qualification boundary.",s:"Live; execution still being stabilized",d:"R03 metric definitions; R04 routing/signals; SDR staffing and training",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R02",t:"Lead scoring v4 and disqualification rules",f:"Now",ws:"Brazil funnel",o:"Eduardo",p:"Lucas, Sean / Shun, Lifecycle, RevOps",n:"Validate company, profile, engagement and ERP signals on a labeled cohort; review false negatives with SDRs; get a clear publish decision and a rollback plan.",s:"Draft / release status unconfirmed",d:"R01 reviewed lead outcomes; R03 stable denominator; R04 exclusion mapping",c:"Needs reconciliation",cp:"Oct 2",rb:false},
+ {id:"R03",t:"Inbound funnel autopsy and QBR evidence",f:"Now",ws:"Brazil funnel",o:"Eduardo",p:"Evan, Lucas, Sean, Sachin, David",n:"Produce one source-linked before/after readout with cohort dates, definitions, 90-day trends, first-touch SLA, loss reasons, S1/S2 progression and attributed revenue where verified.",s:"Dashboard live; comparable impact readout outstanding",d:"R04 authoritative attribution and reporting data; R01 execution logs",c:"Corroborated notes",cp:"Sep 30",rb:true},
+ {id:"R04",t:"Paid feedback, attribution and CRM association integrity",f:"Now",ws:"Brazil funnel",o:"David (attribution) + Sean / Sachin (paid and BI)",p:"Eduardo, Lucas, Alyssa, Julia",n:"Reconcile hard disqualification signals, existing-open-deal associations, contact/lead ownership and activity logging; validate the attribution release plus Meta freshness and LinkedIn ad-level joins.",s:"Partially corrected; several data gaps remain",d:"RevOps release and BI fixes; R02 lost-reason taxonomy; Lifecycle suppression rules",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R05",t:"Wake the Dead / Spotter: prove adoption and pipeline",f:"Now",ws:"Revenue from shipped tools",o:"Eduardo + Malu",p:"Lucas, Gui, Cheney, ADRs",n:"Build a batch-level funnel from suggested logo to accepted, worked, connected, S1, S2 and won; reconcile Growth Program / Sniper Project tagging; distinguish reopened deals from new opportunities.",s:"Live; pipeline attribution incomplete",d:"R08 instrumentation; R04 attribution; R06 execution bridge; stable import behavior",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R06",t:"Sniper → HubSpot handoff with seller review",f:"Dependency",ws:"Shared foundations",o:"Malu + Cheney / HubSpot team",p:"Lucas, Trevor, Eduardo, Ramalho",n:"Specify a review-and-approve step inside Sniper, then create/update the correct company, contact, lead owner and sequence in HubSpot without manual CSV round trips.",s:"Repeated open dependency; solution not confirmed",d:"R07 identity rules; HubSpot capacity/rate limits; seller acceptance criteria",c:"Corroborated notes",cp:"Oct 9",rb:false},
+ {id:"R07",t:"Plant identity, account association and ownership",f:"Dependency",ws:"Shared foundations",o:"David + Ramalho; Malu for Sniper behavior",p:"Eduardo, sales leaders, Baroni",n:"Agree field-level sources of truth and plant-level ownership rules; repair wrong regional associations and duplicate plants; test multi-plant accounts with multiple active reps.",s:"Unresolved architecture / data quality blocker",d:"RevOps / BE architecture decision and regional seller rules",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R08",t:"Sniper usage tracking and evidence-led product backlog",f:"Now",ws:"Revenue from shipped tools",o:"Eduardo + Malu",p:"Bruno, Ramalho, seller pilot group",n:"Inventory existing events, define missing events for Hit List, Finder, Atlas, Accounts and Spotter, and order UX work by observed activation and execution drop-offs.",s:"Instrumentation review in progress",d:"R06 handoff boundary; existing analytics access",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R09",t:"Mexico rollout: Spotter, Wake the Dead and weekly lists",f:"Next",ws:"Regional replication",o:"Eduardo + Lucas (Mexico rollout)",p:"Cheney, Malu, Ramalho, Pepeu, Mexico reps",n:"Confirm which reps and cohorts are live; run the agreed weekly CSV cadence; verify imported targets, owner assignments and sequence execution before increasing volume.",s:"Lists and shared pipeline reported live; weekly execution needs confirmation",d:"R04 routing; R05 attribution; R07 identity; seller capacity",c:"Corroborated notes",cp:"Oct 5",rb:false},
+ {id:"R10",t:"Sales Page Builder: Brazil seller adoption pilot",f:"Next",ws:"Revenue from shipped tools",o:"Eduardo (activation) + Rodrigo (product)",p:"Gil, Lucas, two pilot sellers, TAMs",n:"Select two sellers and named accounts; validate plant proof and page data with account owners; put tracked links in the existing workflow; measure real sends and prospect actions.",s:"Tool released; Brazil rollout still planned",d:"R07 plant identity; R04 attribution; approved proof/assets; seller workflow",c:"Corroborated notes",cp:"Oct 9",rb:false},
+ {id:"R11",t:"Out-of-plant expansion: owned, actionable target cohort",f:"Next",ws:"Expansion",o:"Eduardo + sales / TAM leadership",p:"Chico, Lucas, account AEs/TAMs, Ramalho, Rodrigo",n:"Select a small cohort with a proof plant, a target plant, relationship sponsor, buyer, named owner and outreach route; use the page builder and approved references to activate it.",s:"Targeting assets built; commercial motion needs proof",d:"R07 plant ownership; R10 proof-page activation; TAM consent and data validation",c:"Corroborated notes",cp:"Oct 9",rb:false},
+ {id:"R12",t:"In-app expansion pilot: UG2 CTA and empty states",f:"Next",ws:"Expansion",o:"Eduardo + Product (Camila / Arthur)",p:"Eric, Evan, Lucas (Web), Custódio, TAMs",n:"Confirm event coverage; route UG2 interest to an owned conversion experience; agree a low-friction handoff to the right TAM; pilot one further empty-state CTA only after measurement works.",s:"Newly agreed discovery / instrumentation",d:"Product engineering; R13 outreach ownership; Web/TAM routing; R03 reporting",c:"Corroborated notes",cp:"Oct 9",rb:false},
+ {id:"R13",t:"UG2 learning loop and TAM-led expansion playbook",f:"Now",ws:"Expansion",o:"Eduardo + Eric",p:"Alex, Chico, TAMs, Alyssa / Julia",n:"Close the pilot account-by-account with the nine TAMs; publish segmentation, sender identity, handoff rules and do/don't guidance; connect webinar and product signals to TAM action.",s:"Post-mortem discussed; results closure and ownership still needed",d:"TAM feedback; Lifecycle segmentation; R12 measurement",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R14",t:"TMD: invitations, executive lists and registration conversion",f:"Now",ws:"TMD and ABM",o:"Eduardo (data / WhatsApp) + Mary (event operations)",p:"Pepeu, Gui, Eric, Alex, Alyssa, Julia, Ivan",n:"Verify roundtable A/B/C lists and approvals; reconcile invited/approved/confirmed in-person records; route high-value nonresponders to seller calls.",s:"WhatsApp live; attendance and list closure urgent",d:"Cvent/HubSpot identity; approved contact owner; email health; Sales phone follow-up",c:"Corroborated notes",cp:"Sep 30",rb:true},
+ {id:"R15",t:"TMD: post-event acquisition and expansion engine",f:"Now",ws:"TMD and ABM",o:"Alyssa + Mary / Eric; Eduardo for Growth coordination",p:"Julia, Sales, TAMs, Marina, Ivan, Web",n:"Finish a segment-by-segment runbook before the event: attendees/no-shows, prospects/customers, hand-raises and account priority; assign follow-up owners, SLA, CRM fields, content and a results checkpoint.",s:"Strategy agreed in parts; integrated handoff unconfirmed",d:"R14 clean event data; R13 TAM ownership; R04 attribution; content/creative capacity",c:"Corroborated notes",cp:"Oct 9",rb:false},
+ {id:"R16",t:"Brazil ABM priorities and late-stage deal acceleration",f:"Next",ws:"TMD and ABM",o:"Eduardo + regional sales leaders",p:"Buzz, Bernardo, Alyssa, Mary, AEs, Creative",n:"Refresh the priority portfolio against live open deals, EB coverage, slippage and TMD participation; attach one blocker, one motion and one AE-approved next step to each selected account.",s:"Lists built; account-level actions need reconciliation",d:"Current CRM snapshot; account-owner review; R14/15 event strategy; creative capacity",c:"Corroborated notes",cp:"Oct 5",rb:false},
+ {id:"R17",t:"EMEA / Poland: bounded 100-account ABM proposal",f:"Next",ws:"Regional replication",o:"Eduardo + Scopel",p:"Evan, two EMEA AEs, SE, Sean, Richard, Valentina",n:"Reduce the broad list to roughly 100 accounts; separate new-logo food targets from sibling-plant introductions; prepare the one-week playbook, sales capacity assumptions and a justified pilot budget.",s:"Planning supported; budget and execution gate open",d:"R07 identity and owner rules; regional seller capacity; explicit scope/budget decision",c:"Needs reconciliation",cp:"Oct 2",rb:false},
+ {id:"R18",t:"US inbound replication and global operating standards",f:"Next",ws:"Regional replication",o:"Steph + Eduardo",p:"Trevor, Tony, Evan, RevOps",n:"Walk through the BR/MX runbook, map US differences, give access to reporting and create a small adaptation backlog with one joint owner per deliverable.",s:"Mandate / collaboration established",d:"R01/03 stable BR/MX definitions; US pre-sales sign-off; R04 attribution",c:"Corroborated notes",cp:"Oct 9",rb:false},
+ {id:"R19",t:"LatAm performance hire and interim ownership",f:"Dependency",ws:"Capacity and governance",o:"Sean + Priscilla",p:"Eduardo, Henrique, Evan",n:"Clarify Eduardo's interview role and interim responsibilities, preserve the Monday global performance review, and put requests in the shared channel with an owner and capacity tradeoff.",s:"Hiring prioritized; seat not confirmed filled",d:"Recruiting approvals and candidate fit with Creative",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R20",t:"Web / CRO / multimodal repositioning dependencies",f:"Monitor",ws:"Partner roadmap",o:"Lucas (Web), Franklin, Rodrigo, James",p:"Gabby, Sandra, Marina, Eduardo for Growth inputs",n:"Track homepage, multimodal and About Us readiness; ensure conversion instrumentation survives releases; coordinate UG2/branded pages and the CRO test calendar.",s:"Partner-led delivery in progress",d:"Creative/copy approvals; R12 in-app landing destination; R04 form routing",c:"Corroborated notes",cp:"Sep 30",rb:true},
+ {id:"R21",t:"ARA: regional launch readiness and owner routing",f:"Later",ws:"Expansion",o:"Lucas + Austin / Easton; Eduardo for Brazil activation",p:"David, SE team, Product Marketing, Sean",n:"Confirm the latest regional state, report quality, AE routing and Portuguese validation; decide whether a narrow Brazil pilot fits after current priorities.",s:"US launch progress reported; Brazil readiness not established",d:"SE readiness; company-owner routing; approved regional campaign assets",c:"Regional status gap",cp:"Oct 19",rb:false},
+ {id:"R22",t:"Subscriber nurture and high-intent content handoff",f:"Later",ws:"Brazil funnel",o:"Alyssa + Julia; Eduardo / Lucas for sales handoff",p:"Sean, SDR team, Web, Ivan",n:"Document hand-raiser versus subscriber definitions, sequence ownership and suppressions; design a small subscriber handoff only when staffing and first-response coverage are stable.",s:"Nurture retained; SDR expansion gated on capacity",d:"R01 capacity; R02 fit definitions; R04 shared exclusions; email health",c:"Corroborated notes",cp:"Oct 19",rb:false},
+ {id:"R23",t:"Gifting automation and acceleration: explicit close / hold decision",f:"Later",ws:"TMD and ABM",o:"Lucas (automation) + Marketing budget owner",p:"Evan, Finance, Eduardo, Julia, account AEs",n:"Confirm whether the August finance hold was lifted and whether any controlled pilot ran; either close with evidence or retain an explicit budget/owner gate before more build work.",s:"Historically blocked by budget; current release unconfirmed",d:"Budget/approval owner; delivery integration; real deal values and stage aging",c:"Closure not found",cp:"Oct 9",rb:false},
+ {id:"R24",t:"Global intent and champion-change signals",f:"Monitor",ws:"Partner roadmap",o:"Steph + Cheney / Gui / David",p:"Eduardo, Malu, Alyssa",n:"Track job-change record policy, signal ownership and verified Demandbase integration; contribute Brazil use cases and consume validated signals in the existing seller workflow.",s:"Global framework progressing; integrations incomplete",d:"Contact identity decision; data integration readiness; R06 execution bridge",c:"Corroborated notes",cp:"Oct 16",rb:false},
+ {id:"R25",t:"Partnership motion / MSS co-marketing",f:"Monitor",ws:"Partner roadmap",o:"Partnerships + Global Growth",p:"Steph, Sean, Web, Eduardo for regional inputs",n:"Confirm the first MSS campaign scope and owner, measure partnership-form routing, and evaluate Brazil relevance after a working pilot.",s:"Opportunity / first campaign planned",d:"Partnerships ownership; RevOps routing; available creative capacity",c:"Planning evidence",cp:"Oct 23",rb:false},
+ {id:"R26",t:"QBR proof pack and shared operating roadmap",f:"Now",ws:"Capacity and governance",o:"Eduardo + Evan for prioritization",p:"Every dependency owner",n:"Use this portfolio in the QBR: verify latest state and owners, select three active delivery programs, attach evidence to every result and move execution tasks into existing Jira / engineering systems.",s:"Required; this review establishes a draft baseline",d:"R03 and R05 outcome evidence; partner state confirmation",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R27",t:"Content / creative / lifecycle capacity and asset readiness",f:"Monitor",ws:"Partner roadmap",o:"Alyssa / Julia, James / Ivan, Marina / Sandra, Creative",p:"Eduardo, Mary, Web, regional sales",n:"Maintain one request list tied to campaigns and real deadlines; reuse approved multimodal / case-study assets; keep large sends coordinated while email health is low.",s:"Shared production constraints active",d:"Subject-matter review; brand/logo permissions; email-health recovery; R15 follow-up runbook",c:"Corroborated notes",cp:"Oct 2",rb:false},
+ {id:"R28",t:"Parked experiments and unclosed discovery bets",f:"Later",ws:"Backlog",o:"Eduardo; ownership re-confirmed per experiment",p:"Relevant seller, paid or engineering partner",n:"For CMMS/Crowbar lists, association scraping, geofencing, phone verification, WhatsApp AI, Instagram boosts and ROI tools: record last test, result and resume condition; close or fold into an existing program.",s:"Ideas / old pilots; outcomes mostly unverified",d:"Core portfolio capacity; validated distribution path; budget where relevant",c:"Closure not found",cp:"Oct 9",rb:false},
+ {id:"R29",t:"Expansion signals, EBRs and renewal support",f:"Monitor",ws:"Expansion",o:"TAM / CS leadership + Eric / Nick",p:"Eduardo, Evan, BE, account AEs",n:"Agree which signals identify a customer ready for action, who receives them and the expected next conversation; prioritize missing EBRs or strong first-90-day proof before adding campaigns.",s:"Shared opportunity; Brazil ownership / rollout unconfirmed",d:"Trusted usage/insight data; R13 customer communication rules; R07 plant identity",c:"Planning evidence",cp:"Oct 16",rb:false},
+ {id:"R30",t:"Treble ownership, plan change and operating runbook",f:"Next",ws:"Capacity and governance",o:"Eduardo + Treble / internal contract owner",p:"RevOps, Marketing operations, SDR lead",n:"Confirm agent ownership and escalation, finish the approved contract review, and document plan/usage/currency before reporting savings as realized.",s:"Access improved; contract change not verified",d:"Contract and billing confirmation; current SDR agent list; R14 campaign ownership",c:"Needs reconciliation",cp:"Oct 2",rb:false}
+];
+const FOCI=["All","Now","Next","Dependency","Monitor","Later"];
+let focus="All";
+const rf=$("#rfilters");
+FOCI.forEach(f=>{
+  const c=RM.filter(r=>f==="All"||r.f===f).length;
+  const b=document.createElement("button");b.className="fchip";b.type="button";b.dataset.f=f;
+  b.innerHTML=`${f}<span class="c">${c}</span>`;b.addEventListener("click",()=>{focus=f;renderBoard();});rf.appendChild(b);
+});
+function renderBoard(){
+  $$("#rfilters .fchip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===focus));
+  const rows=RM.filter(r=>focus==="All"||r.f===focus);
+  $("#board").innerHTML=rows.map(r=>`<div class="item" data-id="${r.id}">
+   <button type="button" aria-expanded="false"><span class="id">${r.id}</span><span class="ti">${esc(r.t)}</span><span class="ow">${esc(r.o)}</span><span class="cp">${esc(r.cp)}${r.rb?"":"&thinsp;~"}</span><span class="fo ${r.f}"><i></i>${r.f}</span></button>
+   <div class="det">
+    <div><h4>Next milestone</h4>${esc(r.n)}</div>
+    <div><h4>Delivery state</h4>${esc(r.s)}<h4 style="margin-top:10px">Dependencies</h4>${esc(r.d)}</div>
+    <div><h4>Owner</h4>${esc(r.o)}<h4 style="margin-top:10px">Partners</h4>${esc(r.p)}</div>
+    <div><h4>Workstream</h4><span class="ws">${esc(r.ws)}</span><h4 style="margin-top:10px">Confidence · checkpoint</h4>${esc(r.c)} · ${esc(r.cp)} (${r.rb?"recorded target":"proposed checkpoint"})</div>
+   </div></div>`).join("");
+  $$("#board .item > button").forEach(b=>b.addEventListener("click",()=>{const it=b.parentElement;const o=!it.classList.contains("open");it.classList.toggle("open",o);b.setAttribute("aria-expanded",o);}));
+}
+renderBoard();
+
+/* ---------- slide 11: sequence ---------- */
+const WIN=[
+ {w:"Sep 28 – Oct 2",f:"Close QBR evidence; finish the inbound autopsy; check the scoring release; verify TMD lists and the Wednesday follow-up; get the plant-data decision; produce the bounded EMEA proposal.",e:"A factual Q3 readout, three active programs, and no critical dependency without an owner and a checkpoint."},
+ {w:"Oct 5 – 9",f:"Stabilize shared measurement; complete TMD follow-up readiness; activate two Brazil page-builder sellers; agree the Product tracking and CTA implementation.",e:"Real seller use, an event runbook ready, and measurable pilot specifications."},
+ {w:"Oct 12 – 16",f:"Execute TMD around its Oct 15 main date in São Paulo; capture intent and owner context; protect inbound first-response performance while the team is at the event.",e:"Clean event records and assigned follow-up, with no loss of core funnel coverage.",ev:"TMD26 · Oct 15"},
+ {w:"Oct 19 – 30",f:"Read event outcomes; assess the first seller-page and Spotter cohorts; evaluate in-app engagement once there is enough tracking.",e:"Continue, change or stop decisions based on evidence. Allow about a month after instrumentation for deeper Product choices."},
+ {w:"Nov – Dec",f:"Scale only proven motions; adapt the US workflow with Steph; expand international and plant programs behind the agreed gates.",e:"Repeatable, owned workflows and measurable pipeline and revenue, rather than more unclosed launches."}
+];
+const seqEl=$("#seq");
+WIN.forEach((w,i)=>{
+  const b=document.createElement("button");b.className="win";b.type="button";
+  b.innerHTML=`<span class="w">${esc(w.w)}</span>${w.ev?`<span class="ev"><i></i>${esc(w.ev)}</span>`:""}<span class="f">${esc(w.f.split(";")[0])}.</span>`;
+  b.addEventListener("click",()=>setWin(i));seqEl.appendChild(b);
+});
+function setWin(i){
+  $$("#seq .win").forEach((b,j)=>b.classList.toggle("on",j===i));
+  const w=WIN[i];$("#seq-h").textContent=w.w;$("#seq-f").textContent=w.f;$("#seq-e").textContent=w.e;
+}
+setWin(1);
+
+/* ---------- slide 12: Q4 OKRs ---------- */
+const OKRS=[
+ {o:"O1 · Acquisition",t:"Bring Brazil back to 80 stage-1 deals a month, and count what Growth sourced.",krs:[
+  {t:"≥20 stage-1 deals a week in Brazil, sustained for 4 consecutive weeks by Nov 30",base:14,tgt:20,max:24,unit:"/wk",n:"Baseline ~14/week (Oct 1). 12 was the best week since mid-August."},
+  {t:"Growth-sourced stage-1 deals (Wake the Dead, Spotter, priority lists) counted weekly for BR and MX in one report linked in the 1:1 doc",bin:true,n:"Baseline: not counted anywhere Evan reads."},
+  {t:"Wake the Dead closed-won ARR in a HubSpot report by Dec 31",bin:true,n:"Baseline: ≥5 reopened with EB; no won revenue attributed yet."}
+ ]},
+ {o:"O2 · Efficiency",t:"Make inbound and paid efficient before adding spend.",krs:[
+  {t:"First-attempt coverage ≥90% of eligible hand-raisers, with the definition and denominator agreed with Pre-sales",base:40,tgt:90,max:100,unit:"%",n:"Baseline ~4/10 in August, ~9/10 reported Sep 22 under an undefined denominator. Target becomes real once the definition is agreed."},
+  {t:"MQL→S1 conversion back to ≥17% on a stable cohort definition",base:10,tgt:17,max:40,unit:"%",n:"Baseline ~10% (Sep, inflated denominator); 17% in August; 30–37% earlier in the year."},
+  {t:"Lead scoring v4 published with a rollback plan; SDRs work the queue by score priority",bin:true,n:"Baseline: draft, do-not-publish (Sep 18)."},
+  {t:"Brazil cost per SAL reported weekly next to sourced pipeline; Meta Demo Form V8 live in Brazil",bin:true,n:"Baseline: efficiency dropped after Prado left; V8 US-only."}
+ ]},
+ {o:"O3 · Growth product",t:"Make Sniper the system sellers work from.",krs:[
+  {t:"Spotter results dashboard live: stage-1 deals sourced per ADR, per week, BR and MX",bin:true,n:"Baseline: a few S1s through Spotter, not counted (Sep 18)."},
+  {t:"100% of BR and MX ADRs zero out their Spotter list weekly, measured by usage tracking",base:0,tgt:100,max:100,unit:"%",n:"Baseline: rule set Sep 8; tracking being built with Malu."},
+  {t:"Sniper ↔ HubSpot swim lanes documented and one review-and-approve handoff specified (R06)",bin:true,n:"Baseline: divergent workflows; agreement in principle on Sep 25."}
+ ]},
+ {o:"O4 · Expansion",t:"Turn every logo into a plant strategy, with a cohort someone owns.",krs:[
+  {t:"Sales Page Builder: 2 Brazil sellers with tracked sends and prospect actions by Oct 31",base:0,tgt:2,max:4,unit:" sellers",n:"Baseline: 0 in Brazil; one US anecdote (Gage, on-site booked next day)."},
+  {t:"≥10 expansion opportunities opened from the out-of-plant and TMD cohorts by Dec 18, with a named owner on each",base:0,tgt:10,max:12,unit:"",n:"Replaces UG2's 10 (0 reached). Target to calibrate once the cohort is sized."},
+  {t:"TMD follow-up runbook executed; stage-1 and expansion opportunities from attendees counted within 30 days",bin:true,n:"Baseline: 150 in-person confirmations; runbook unconfirmed (R15)."}
+ ]}
+];
+$("#okrs").innerHTML=OKRS.map(o=>`<div class="okr"><span class="o">${esc(o.o)}</span><h3>${esc(o.t)}</h3><ul>${o.krs.map(k=>{
+  let bar;
+  if(k.bin){bar=`<span class="bin"><i></i>not started<span style="opacity:.5">→</span><i class="t"></i>done</span>`;}
+  else{const pb=(k.base/k.max*100).toFixed(1),pt=(k.tgt/k.max*100).toFixed(1);
+   bar=`<div class="b"><div class="trk"><div class="base" style="width:${pb}%"></div><div class="tg" style="left:${pt}%"></div></div><span class="bt">${k.base}${esc(k.unit)} → <b>${k.tgt}${esc(k.unit)}</b></span></div>`;}
+  return `<li><span class="t">${esc(k.t)}</span>${bar}<span class="n">${esc(k.n)}</span></li>`;}).join("")}</ul></div>`).join("");
+
+/* ---------- slide 13: asks ---------- */
+const ASKS=[
+ {d:"Budget to return to 80 deals a month",w:"~600K today vs ~1M when Brazil last ran at 80. Ask: the analysis first (Oct 1 action), then a staged increase once cost per SAL and first-response SLA hold for four weeks.",who:"Evan → Richard, Valentina"},
+ {d:"Lead scoring v4: publish or keep draft",w:"Sep 18 said do not publish; Sep 22 targeted a first version that week. Need an explicit publish decision and a rollback plan before SDRs work by score.",who:"Evan, Lucas"},
+ {d:"Plant object: what is authoritative, who can work each plant",w:"Logos lock to one rep even when the company has 17 plants and 5 open deals. Expansion for the next ~4 quarters depends on plant-level ownership (R07).",who:"David, Ramalho, Malu"},
+ {d:"EMEA / Poland pilot: scope and budget gate",w:"ABM on ~100 accounts with two AEs and one SE. Any ad figure must be CPM/CPA-backed before Richard and Valentina see it; start with smaller test pools.",who:"Evan, Scopel, Sean"},
+ {d:"Q4 compensation metrics",w:"The regional new-logo bucket may be replaced by pure ARR; Richard is aligning with Igor. Plan outcomes separately from the formula until it is set.",who:"Richard, Igor"},
+ {d:"Attribution dispute process",w:"Document how the 60-day attribution logic works and how to dispute it formally; enable SDRs and ADRs so David is not pressured directly and no lead is removed by hand.",who:"Me, Lucas (owner: Growth)"},
+ {d:"Headcount for 2027",w:"At least two inbound growth analysts by Q2 2027 (LatAm and one more region). No budget approval yet; the LatAm/EMEA split inside the team still needs defining.",who:"Evan, Richard"}
+];
+$("#asks").innerHTML=ASKS.map(a=>`<div class="ask"><div class="d">${esc(a.d)}</div><div class="w">${esc(a.w)}</div><div class="who"><b>Decides</b>${esc(a.who)}</div></div>`).join("");
+
+/* ---------- boot ---------- */
+const m=(location.hash||"").match(/^#s(\d{1,2})$/);
+go(m?+m[1]-1:0,false);
+})();
+</script>
